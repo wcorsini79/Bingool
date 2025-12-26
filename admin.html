@@ -3,846 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BINNGO - Administrador</title>
+    <title>Admin - Bingool</title>
+
+    <!-- Firebase v8 compatível -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <!-- QRCode -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 900px;
-            width: 100%;
-            padding: 40px;
-            animation: slideIn 0.5s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .screen {
-            display: none;
-        }
-
-        .screen.active {
-            display: block;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            margin: 0;
+            padding: 25px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0b0f19, #141a2e);
+            color: #fff;
+            text-align: center;
         }
 
         h1 {
-            color: #667eea;
-            margin-bottom: 30px;
-            text-align: center;
-            font-size: 2.5em;
+            text-shadow: 0 0 12px #67c7ff;
+            font-size: 2.2em;
+            margin-bottom: 25px;
         }
 
-        h2 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 600;
-            font-size: 1.1em;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1em;
-            transition: border-color 0.3s;
-        }
-
-        input[type="text"]:focus,
-        input[type="number"]:focus,
-        input[type="password"]:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-
-        .checkbox-group label {
-            margin-bottom: 0;
-            cursor: pointer;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 30px;
-            flex-wrap: wrap;
+        .panel {
+            margin: auto;
+            max-width: 850px;
+            padding: 30px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 18px;
+            border: 1px solid rgba(103,199,255,0.25);
+            box-shadow: 0 0 22px rgba(103,199,255,0.30);
+            backdrop-filter: blur(12px);
         }
 
         button {
-            flex: 1;
-            padding: 15px 30px;
+            background: rgba(103,199,255,0.15);
+            border: 1px solid #67c7ff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            color: #67c7ff;
+            cursor: pointer;
             font-size: 1.1em;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            min-width: 150px;
+            margin: 8px;
+            transition: .25s;
+            box-shadow: 0 0 12px rgba(103,199,255,0.20);
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+        button:hover {
+            background: rgba(103,199,255,0.25);
+            box-shadow: 0 0 20px rgba(103,199,255,0.40);
+            transform: scale(1.05);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-secondary {
-            background: #f0f0f0;
-            color: #333;
-        }
-
-        .btn-secondary:hover {
-            background: #e0e0e0;
-        }
-
-        .btn-danger {
-            background: #ff6b6b;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #ff5252;
-        }
-
-        .qr-section {
-            text-align: center;
-            margin: 30px 0;
-            padding: 20px;
-            background: #f9f9f9;
-            border-radius: 10px;
-        }
-
-        .qr-code {
-            max-width: 300px;
-            margin: 20px auto;
-        }
-
-        .qr-code img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        .share-link {
-            background: #f0f0f0;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            word-break: break-all;
-            font-size: 0.9em;
-        }
-
-        .copy-btn {
-            background: #667eea;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            margin-top: 10px;
-        }
-
-        .copy-btn:hover {
-            background: #764ba2;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .stat-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.5em;
-            font-weight: bold;
-        }
-
-        .stat-label {
-            font-size: 0.9em;
-            opacity: 0.9;
-        }
-
-        .bingo-globe {
-            width: 150px;
-            height: 150px;
-            margin: 20px auto;
-            background: radial-gradient(circle at 30% 30%, #ffd700, #ffed4e, #ffa500);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3em;
-            font-weight: bold;
-            color: #333;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            animation: spin 3s linear infinite;
-        }
-
-        @keyframes spin {
-            from {
-                transform: rotateY(0deg) rotateX(0deg);
-            }
-            to {
-                transform: rotateY(360deg) rotateX(10deg);
-            }
-        }
-
-        .bingo-globe.stopped {
-            animation: none;
-        }
-
-        .last-number {
-            font-size: 4em;
-            font-weight: bold;
-            color: #667eea;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .history {
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-
-        .history-title {
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .history-numbers {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .history-number {
-            background: #667eea;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 5px;
-            font-weight: 600;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideIn 0.3s ease-out;
-        }
-
-        .modal-content h2 {
-            margin-bottom: 20px;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
+        #drawnNumbers {
             margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 8px;
         }
 
-        .modal-buttons button {
-            flex: 1;
+        .nbox {
+            height: 38px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            border: 1px solid rgba(103,199,255,0.4);
+            background: rgba(255,255,255,0.05);
+            font-size: 1.1em;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(103,199,255,0.15);
+            transition: .25s;
         }
 
-        .roulette {
-            width: 300px;
-            height: 300px;
-            margin: 20px auto;
-            border-radius: 50%;
-            background: conic-gradient(
-                from 0deg,
-                #ff6b6b 0deg 4.8deg,
-                #4ecdc4 4.8deg 9.6deg,
-                #45b7d1 9.6deg 14.4deg,
-                #f7b731 14.4deg 19.2deg,
-                #5f27cd 19.2deg 24deg,
-                #00d2d3 24deg 28.8deg,
-                #ff9ff3 28.8deg 33.6deg,
-                #54a0ff 33.6deg 38.4deg,
-                #48dbfb 38.4deg 43.2deg,
-                #1dd1a1 43.2deg 48deg,
-                #ff6348 48deg 52.8deg,
-                #ffa502 52.8deg 57.6deg,
-                #ff6b6b 57.6deg 62.4deg,
-                #4ecdc4 62.4deg 67.2deg,
-                #45b7d1 67.2deg 72deg,
-                #f7b731 72deg 76.8deg,
-                #5f27cd 76.8deg 81.6deg,
-                #00d2d3 81.6deg 86.4deg,
-                #ff9ff3 86.4deg 91.2deg,
-                #54a0ff 91.2deg 96deg,
-                #48dbfb 96deg 100.8deg,
-                #1dd1a1 100.8deg 105.6deg,
-                #ff6348 105.6deg 110.4deg,
-                #ffa502 110.4deg 115.2deg,
-                #ff6b6b 115.2deg 120deg,
-                #4ecdc4 120deg 124.8deg,
-                #45b7d1 124.8deg 129.6deg,
-                #f7b731 129.6deg 134.4deg,
-                #5f27cd 134.4deg 139.2deg,
-                #00d2d3 139.2deg 144deg,
-                #ff9ff3 144deg 148.8deg,
-                #54a0ff 148.8deg 153.6deg,
-                #48dbfb 153.6deg 158.4deg,
-                #1dd1a1 158.4deg 163.2deg,
-                #ff6348 163.2deg 168deg,
-                #ffa502 168deg 172.8deg,
-                #ff6b6b 172.8deg 177.6deg,
-                #4ecdc4 177.6deg 182.4deg,
-                #45b7d1 182.4deg 187.2deg,
-                #f7b731 187.2deg 192deg,
-                #5f27cd 192deg 196.8deg,
-                #00d2d3 196.8deg 201.6deg,
-                #ff9ff3 201.6deg 206.4deg,
-                #54a0ff 206.4deg 211.2deg,
-                #48dbfb 211.2deg 216deg,
-                #1dd1a1 216deg 220.8deg,
-                #ff6348 220.8deg 225.6deg,
-                #ffa502 225.6deg 230.4deg,
-                #ff6b6b 230.4deg 235.2deg,
-                #4ecdc4 235.2deg 240deg,
-                #45b7d1 240deg 244.8deg,
-                #f7b731 244.8deg 249.6deg,
-                #5f27cd 249.6deg 254.4deg,
-                #00d2d3 254.4deg 259.2deg,
-                #ff9ff3 259.2deg 264deg,
-                #54a0ff 264deg 268.8deg,
-                #48dbfb 268.8deg 273.6deg,
-                #1dd1a1 273.6deg 278.4deg,
-                #ff6348 278.4deg 283.2deg,
-                #ffa502 283.2deg 288deg,
-                #ff6b6b 288deg 292.8deg,
-                #4ecdc4 292.8deg 297.6deg,
-                #45b7d1 297.6deg 302.4deg,
-                #f7b731 302.4deg 307.2deg,
-                #5f27cd 307.2deg 312deg,
-                #00d2d3 312deg 316.8deg,
-                #ff9ff3 316.8deg 321.6deg,
-                #54a0ff 321.6deg 326.4deg,
-                #48dbfb 326.4deg 331.2deg,
-                #1dd1a1 331.2deg 336deg,
-                #ff6348 336deg 340.8deg,
-                #ffa502 340.8deg 345.6deg,
-                #ff6b6b 345.6deg 350.4deg,
-                #4ecdc4 350.4deg 355.2deg,
-                #45b7d1 355.2deg 360deg
-            );
-            border: 5px solid #333;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        .drawn {
+            background: rgba(103,255,199,0.15);
+            border-color: #55ffda;
+            color: #55ffda;
+            box-shadow: 0 0 15px #55ffda;
         }
 
-        .roulette::before {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #333;
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-        }
-
-        .roulette::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-top: 25px solid #333;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-        }
-
-        .roulette.spinning {
-            animation: spin-roulette 3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        @keyframes spin-roulette {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(1800deg);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 1.8em;
-            }
-
-            h2 {
-                font-size: 1.3em;
-            }
-
-            .button-group {
-                flex-direction: column;
-            }
-
-            button {
-                min-width: auto;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .bingo-globe {
-                width: 100px;
-                height: 100px;
-                font-size: 2em;
-            }
-
-            .last-number {
-                font-size: 2.5em;
-            }
-
-            .roulette {
-                width: 200px;
-                height: 200px;
-            }
+        #bingoCalls div {
+            margin: 6px auto;
+            padding: 10px;
+            width: 260px;
+            border-radius: 12px;
+            border: 1px solid rgba(103,199,255,0.35);
+            background: rgba(255,255,255,0.04);
+            box-shadow: 0 0 12px rgba(103,199,255,0.18);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Tela 1: Cadastro da Sala -->
-        <div class="screen active" id="screen1">
-            <h1>🎰 BINNGO</h1>
-            <h2>Bem-vindo, Administrador!</h2>
-            
-            <div class="form-group">
-                <label for="roomName">Nome da Sala de Bingo:</label>
-                <input type="text" id="roomName" placeholder="Ex: Sala Premium, Bingo Noturno...">
-            </div>
 
-            <div class="checkbox-group">
-                <input type="checkbox" id="winnerContinues">
-                <label for="winnerContinues">Vencedor continua na partida</label>
-            </div>
+    <h1>Administração da Sala</h1>
 
-            <div class="button-group">
-                <button class="btn-primary" onclick="goToConfig()">Próximo</button>
-            </div>
-        </div>
+    <div class="panel">
 
-        <!-- Tela 2: Configuração -->
-        <div class="screen" id="screen2">
-            <h2>Configure o seu BINNGO!</h2>
+        <button id="btnCreateRoom">Criar Sala</button>
+        <button id="btnReset" disabled>Reset</button>
 
-            <div class="form-group">
-                <div class="checkbox-group">
-                    <input type="checkbox" id="enablePassword">
-                    <label for="enablePassword">Ativar Senha nas Cartelas</label>
-                </div>
-            </div>
+        <h2 id="roomInfo"></h2>
 
-            <div class="form-group" id="passwordField" style="display: none;">
-                <label for="cartPassword">Senha:</label>
-                <input type="password" id="cartPassword" placeholder="Digite a senha">
-            </div>
+        <button id="btnDraw" disabled>SORTEAR NÚMERO</button>
 
-            <div class="form-group">
-                <div class="checkbox-group">
-                    <input type="checkbox" id="autoFill" checked>
-                    <label for="autoFill">Ativar Auto Preencher</label>
-                </div>
-            </div>
+        <div id="drawnNumbers"></div>
 
-            <div class="form-group">
-                <label for="maxCartelas">Quantidade Máxima de CARTELAS por participante:</label>
-                <input type="number" id="maxCartelas" value="5" min="1">
-            </div>
+        <h2>QR Code</h2>
+        <div id="qrcode"></div>
 
-            <div class="form-group">
-                <label for="maxParticipants">Quantidade Máxima de PARTICIPANTES:</label>
-                <input type="number" id="maxParticipants" value="100" min="1">
-            </div>
+        <h2>Bingos Recebidos</h2>
+        <div id="bingoCalls"></div>
 
-            <div class="button-group">
-                <button class="btn-secondary" onclick="goToScreen(1)">Voltar</button>
-                <button class="btn-primary" onclick="saveConfig()">Salvar Configurações</button>
-                <button class="btn-danger" onclick="cancelBingo()">Cancelar BINGO</button>
-            </div>
-        </div>
-
-        <!-- Tela 3: Espera -->
-        <div class="screen" id="screen3">
-            <h2>Aguardando Jogadores...</h2>
-
-            <div class="stats">
-                <div class="stat-box">
-                    <div class="stat-number" id="userCount">0</div>
-                    <div class="stat-label">Usuários Conectados</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-number" id="cartCount">0</div>
-                    <div class="stat-label">Cartelas Ativas</div>
-                </div>
-            </div>
-
-            <div class="qr-section">
-                <h3>Compartilhe com os Jogadores:</h3>
-                <div class="qr-code" id="qrCode"></div>
-                <p>Ou compartilhe este link:</p>
-                <div class="share-link" id="shareLink"></div>
-                <button class="copy-btn" onclick="copyLink()">Copiar Link</button>
-            </div>
-
-            <div class="button-group">
-                <button class="btn-primary" onclick="startBingo()">Iniciar BINGO</button>
-                <button class="btn-danger" onclick="cancelBingo()">Cancelar BINGO</button>
-            </div>
-        </div>
-
-        <!-- Tela 4: Sorteio -->
-        <div class="screen" id="screen4">
-            <h2>🎮 Jogo em Andamento</h2>
-
-            <div class="stats">
-                <div class="stat-box">
-                    <div class="stat-number" id="userCountGame">0</div>
-                    <div class="stat-label">Usuários Conectados</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-number" id="cartCountGame">0</div>
-                    <div class="stat-label">Cartelas Ativas</div>
-                </div>
-            </div>
-
-            <div class="bingo-globe" id="bingoGlobe">🎲</div>
-            <div class="last-number" id="lastNumber">-</div>
-
-            <div class="history">
-                <div class="history-title">Bolas Sorteadas:</div>
-                <div class="history-numbers" id="historyNumbers"></div>
-            </div>
-
-            <div class="button-group">
-                <button class="btn-primary" onclick="drawBall()">Próxima Bola</button>
-                <button class="btn-danger" onclick="endBingo()">Encerrar BINGO</button>
-            </div>
-        </div>
-
-        <!-- Tela 5: Validação de Bingo -->
-        <div class="modal" id="bingoModal">
-            <div class="modal-content">
-                <h2>🎉 BINGO!</h2>
-                <p id="bingoMessage"></p>
-                <div class="modal-buttons">
-                    <button class="btn-primary" onclick="confirmBingo()">Confirmar</button>
-                    <button class="btn-secondary" onclick="rejectBingo()">Rejeitar</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tela 6: Desempate -->
-        <div class="modal" id="tieModal">
-            <div class="modal-content">
-                <h2>⚖️ Desempate!</h2>
-                <p>Há um empate! Clique no botão para participar da roleta:</p>
-                <div id="tieButtons"></div>
-                <div class="roulette" id="roulette"></div>
-                <p id="tieResult" style="text-align: center; font-size: 1.2em; margin-top: 20px;"></p>
-                <div class="modal-buttons">
-                    <button class="btn-primary" onclick="closeTieModal()">Fechar</button>
-                </div>
-            </div>
-        </div>
     </div>
 
-    <script>
-        // Configurações globais
-        let gameState = {
-            roomName: '',
-            winnerContinues: false,
-            enablePassword: false,
-            cartPassword: '',
-            autoFill: true,
-            maxCartelas: 5,
-            maxParticipants: 100,
-            gameStarted: false,
-            drawnNumbers: [],
-            players: {},
-            winners: []
-        };
+    <script src="firebase.js"></script>
+    <script src="core.js"></script>
+    <script src="admin.js"></script>
 
-        // Carregar estado do localStorage
-        function loadGameState() {
-            const saved = localStorage.getItem('bingoGameState');
-            if (saved) {
-                gameState = JSON.parse(saved);
-            }
-        }
-
-        // Salvar estado no localStorage
-        function saveGameState() {
-            localStorage.setItem('bingoGameState', JSON.stringify(gameState));
-        }
-
-        // Gerar código único da sala
-        function generateRoomCode() {
-            return Math.random().toString(36).substring(2, 8).toUpperCase();
-        }
-
-        // Ir para tela de configuração
-        function goToConfig() {
-            const roomName = document.getElementById('roomName').value.trim();
-            if (!roomName) {
-                alert('Por favor, insira o nome da sala!');
-                return;
-            }
-            gameState.roomName = roomName;
-            gameState.winnerContinues = document.getElementById('winnerContinues').checked;
-            saveGameState();
-            goToScreen(2);
-        }
-
-        // Salvar configurações
-        function saveConfig() {
-            gameState.enablePassword = document.getElementById('enablePassword').checked;
-            gameState.cartPassword = document.getElementById('cartPassword').value;
-            gameState.autoFill = document.getElementById('autoFill').checked;
-            gameState.maxCartelas = parseInt(document.getElementById('maxCartelas').value);
-            gameState.maxParticipants = parseInt(document.getElementById('maxParticipants').value);
-            saveGameState();
-            generateQRCode();
-            goToScreen(3);
-        }
-
-        // Gerar QR Code
-        function generateQRCode() {
-            const roomCode = localStorage.getItem('roomCode') || generateRoomCode();
-            localStorage.setItem('roomCode', roomCode);
-            
-            // CORREÇÃO APLICADA AQUI: Adicionado '/Bingool/' ao caminho do player.html
-            const playerUrl = `https://wcorsini79.github.io/Bingool/player.html?room=${roomCode}`;
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(playerUrl)}`;
-            
-            document.getElementById('qrCode').innerHTML = `<img src="${qrUrl}" alt="QR Code">`;
-            document.getElementById('shareLink').textContent = playerUrl;
-        }
-
-        // Copiar link
-        function copyLink() {
-            const link = document.getElementById('shareLink').textContent;
-            navigator.clipboard.writeText(link).then(() => {
-                alert('Link copiado para a área de transferência!');
-            });
-        }
-
-        // Iniciar bingo
-        function startBingo() {
-            gameState.gameStarted = true;
-            gameState.drawnNumbers = [];
-            saveGameState();
-            goToScreen(4);
-        }
-
-        // Sortear bola
-        function drawBall() {
-            const globe = document.getElementById('bingoGlobe');
-            globe.classList.remove('stopped');
-            
-            setTimeout(() => {
-                let number;
-                do {
-                    number = Math.floor(Math.random() * 75) + 1;
-                } while (gameState.drawnNumbers.includes(number));
-                
-                gameState.drawnNumbers.push(number);
-                saveGameState();
-                
-                document.getElementById('lastNumber').textContent = number;
-                globe.classList.add('stopped');
-                globe.textContent = number;
-                
-                updateHistory();
-            }, 2000);
-        }
-
-        // Atualizar histórico
-        function updateHistory() {
-            const historyDiv = document.getElementById('historyNumbers');
-            historyDiv.innerHTML = gameState.drawnNumbers.map(num => 
-                `<div class="history-number">${num}</div>`
-            ).join('');
-        }
-
-        // Encerrar bingo
-        function endBingo() {
-            if (confirm('Tem certeza que deseja encerrar o bingo?')) {
-                localStorage.removeItem('bingoGameState');
-                localStorage.removeItem('roomCode');
-                goToScreen(1);
-                document.getElementById('roomName').value = '';
-                document.getElementById('enablePassword').checked = false;
-                document.getElementById('cartPassword').value = '';
-                document.getElementById('autoFill').checked = true;
-                document.getElementById('maxCartelas').value = 5;
-                document.getElementById('maxParticipants').value = 100;
-            }
-        }
-
-        // Cancelar bingo
-        function cancelBingo() {
-            if (confirm('Tem certeza que deseja cancelar o bingo?')) {
-                localStorage.removeItem('bingoGameState');
-                localStorage.removeItem('roomCode');
-                goToScreen(1);
-                document.getElementById('roomName').value = '';
-            }
-        }
-
-        // Ir para tela
-        function goToScreen(screenNumber) {
-            document.querySelectorAll('.screen').forEach(screen => {
-                screen.classList.remove('active');
-            });
-            document.getElementById(`screen${screenNumber}`).classList.add('active');
-        }
-
-        // Confirmar bingo
-        function confirmBingo() {
-            document.getElementById('bingoModal').classList.remove('active');
-        }
-
-        // Rejeitar bingo
-        function rejectBingo() {
-            document.getElementById('bingoModal').classList.remove('active');
-        }
-
-        // Fechar modal de desempate
-        function closeTieModal() {
-            document.getElementById('tieModal').classList.remove('active');
-        }
-
-        // Toggle campo de senha
-        document.addEventListener('DOMContentLoaded', function() {
-            loadGameState();
-            
-            document.getElementById('enablePassword').addEventListener('change', function() {
-                document.getElementById('passwordField').style.display = this.checked ? 'block' : 'none';
-            });
-
-            // Atualizar contadores a cada 2 segundos
-            setInterval(() => {
-                if (gameState.gameStarted) {
-                    document.getElementById('userCountGame').textContent = Object.keys(gameState.players).length;
-                    let totalCartelas = 0;
-                    for (let player in gameState.players) {
-                        totalCartelas += gameState.players[player].cartelas ? gameState.players[player].cartelas.length : 0;
-                    }
-                    document.getElementById('cartCountGame').textContent = totalCartelas;
-                }
-            }, 2000);
-        });
-    </script>
 </body>
 </html>

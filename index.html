@@ -1,150 +1,71 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BINNGO - Jogo de Bingo Digital</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bingool</title>
 
+    <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0b0f19, #141a2e);
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            color: white;
         }
 
         .container {
             text-align: center;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 60px 40px;
-            max-width: 600px;
-            width: 100%;
-            animation: slideIn 0.5s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            padding: 40px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border-radius: 18px;
+            border: 1px solid rgba(103,199,255,0.25);
+            box-shadow: 0 0 25px rgba(103,199,255,0.3);
         }
 
         h1 {
-            color: #667eea;
-            font-size: 3.5em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            font-size: 2.6em;
+            letter-spacing: 1px;
+            text-shadow: 0 0 12px #67c7ff;
         }
 
-        p {
-            color: #666;
-            font-size: 1.1em;
-            margin-bottom: 40px;
-            line-height: 1.6;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        button {
-            padding: 20px 40px;
+        .btn {
+            display: block;
+            width: 260px;
+            margin: 12px auto;
+            padding: 16px;
+            background: rgba(103,199,255,0.15);
+            border: 1px solid #67c7ff;
+            border-radius: 12px;
+            color: #67c7ff;
             font-size: 1.2em;
-            border: none;
-            border-radius: 10px;
             cursor: pointer;
-            font-weight: 700;
-            transition: all 0.3s;
-            min-width: 200px;
+            text-decoration: none;
+            transition: .25s;
+            box-shadow: 0 0 12px rgba(103, 199, 255, 0.25);
         }
 
-        .btn-admin {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-admin:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-player {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-        }
-
-        .btn-player:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(245, 87, 108, 0.4);
-        }
-
-        .emoji {
-            font-size: 4em;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 40px 20px;
-            }
-
-            h1 {
-                font-size: 2.5em;
-            }
-
-            p {
-                font-size: 1em;
-            }
-
-            button {
-                min-width: 150px;
-                padding: 15px 30px;
-                font-size: 1em;
-            }
-
-            .button-group {
-                flex-direction: column;
-            }
+        .btn:hover {
+            background: rgba(103,199,255,0.25);
+            box-shadow: 0 0 22px rgba(103, 199, 255, 0.45);
+            transform: scale(1.05);
         }
     </style>
+
 </head>
 <body>
-    <div class="container">
-        <div class="emoji">🎰</div>
-        <h1>BINNGO</h1>
-        <p>Bem-vindo ao jogo de Bingo Digital! Escolha seu papel para começar:</p>
 
-        <div class="button-group">
-            <button class="btn-admin" onclick="goToAdmin()">👨‍💼 Administrador</button>
-            <button class="btn-player" onclick="goToPlayer()">🎮 Jogador</button>
-        </div>
+    <div class="container">
+        <h1>✨ Bingool ✨</h1>
+
+        <a href="admin.html" class="btn">Área do Administrador</a>
+        <a href="player.html" class="btn">Área do Jogador</a>
     </div>
 
-    <script>
-        function goToAdmin() {
-            window.location.href = 'https://wcorsini79.github.io/Bingool/admin.html';
-        }
-
-        function goToPlayer() {
-            window.location.href = 'https://wcorsini79.github.io/Bingool/player.html';
-        }
-    </script>
 </body>
 </html>

@@ -3,748 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BINNGO - Jogador</title>
+    <title>Jogador - Bingool</title>
+
+    <!-- Firebase v8 compatível -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            margin: 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #0b0f19, #141a2e);
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
         }
 
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 900px;
-            width: 100%;
-            padding: 40px;
-            animation: slideIn 0.5s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .screen {
-            display: none;
-        }
-
-        .screen.active {
-            display: block;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        .panel {
+            margin: auto;
+            margin-top: 25px;
+            max-width: 450px;
+            padding: 30px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 18px;
+            border: 1px solid rgba(103,199,255,0.25);
+            box-shadow: 0 0 22px rgba(103,199,255,0.30);
+            backdrop-filter: blur(12px);
         }
 
         h1 {
-            color: #667eea;
-            margin-bottom: 30px;
-            text-align: center;
-            font-size: 2.5em;
+            text-shadow: 0 0 12px #67c7ff;
+            font-size: 2em;
+            margin-bottom: 15px;
         }
 
-        h2 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 600;
-            font-size: 1.1em;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        input[type="password"] {
-            width: 100%;
+        input {
+            width: 80%;
             padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1em;
-            transition: border-color 0.3s;
-        }
-
-        input[type="text"]:focus,
-        input[type="number"]:focus,
-        input[type="password"]:focus {
+            margin: 10px 0;
+            border-radius: 12px;
+            border: 1px solid rgba(103,199,255,0.4);
+            background: rgba(255,255,255,0.07);
+            color: #67c7ff;
+            text-align: center;
+            font-size: 1.1em;
             outline: none;
-            border-color: #667eea;
+            transition: .25s;
         }
 
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-
-        .checkbox-group label {
-            margin-bottom: 0;
-            cursor: pointer;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 30px;
-            flex-wrap: wrap;
+        input:focus {
+            box-shadow: 0 0 18px rgba(103,199,255,0.45);
+            border-color: #67c7ff;
         }
 
         button {
-            flex: 1;
-            padding: 15px 30px;
-            font-size: 1.1em;
-            border: none;
-            border-radius: 8px;
+            background: rgba(103,199,255,0.15);
+            border: 1px solid #67c7ff;
+            padding: 14px 22px;
+            border-radius: 12px;
+            color: #67c7ff;
             cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            min-width: 150px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-secondary {
-            background: #f0f0f0;
-            color: #333;
-        }
-
-        .btn-secondary:hover {
-            background: #e0e0e0;
-        }
-
-        .btn-danger {
-            background: #ff6b6b;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #ff5252;
-        }
-
-        .bingo-card {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            margin: 30px 0;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .bingo-cell {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f0f0f0;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-weight: 600;
             font-size: 1.2em;
-            cursor: pointer;
-            transition: all 0.3s;
+            transition: .25s;
+            margin-top: 12px;
+            width: 80%;
+            box-shadow: 0 0 12px rgba(103,199,255,0.20);
         }
 
-        .bingo-cell:hover {
-            background: #e0e0e0;
-        }
-
-        .bingo-cell.marked {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-color: #667eea;
-        }
-
-        .bingo-cell.center {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-color: #667eea;
-            cursor: default;
-        }
-
-        .rules {
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-
-        .rules-title {
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .rules-list {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .rules-list li {
-            padding: 8px 0;
-            color: #555;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .rules-list li:last-child {
-            border-bottom: none;
-        }
-
-        .waiting-message {
-            text-align: center;
-            font-size: 1.3em;
-            color: #667eea;
-            margin: 40px 0;
-        }
-
-        .bingo-button {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
-            color: white;
-            padding: 20px 40px;
-            font-size: 1.3em;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 700;
-            margin-top: 20px;
-            width: 100%;
-            transition: all 0.3s;
-        }
-
-        .bingo-button:hover {
+        button:hover {
+            background: rgba(103,199,255,0.25);
             transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+            box-shadow: 0 0 20px rgba(103,199,255,0.40);
         }
 
-        .bingo-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: scale(1);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+        #bingoCard {
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: repeat(5, 60px);
+            gap: 8px;
             justify-content: center;
+        }
+
+        .cell {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(103,199,255,0.35);
+            border-radius: 14px;
+            display: flex;
             align-items: center;
-            z-index: 1000;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2em;
+            transition: .25s;
+            box-shadow: 0 0 10px rgba(103,199,255,0.15);
+            cursor: pointer;
         }
 
-        .modal.active {
-            display: flex;
+        .marked {
+            background: rgba(103,255,199,0.15);
+            border-color: #55ffda;
+            box-shadow: 0 0 15px #55ffda;
+            color: #55ffda;
         }
 
-        .modal-content {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideIn 0.3s ease-out;
-            text-align: center;
+        .drawn {
+            background: rgba(255,255,103,0.15);
+            border-color: #fff56b;
+            box-shadow: 0 0 15px #fff56b;
+            color: #fff56b;
         }
 
-        .modal-content h2 {
-            margin-bottom: 20px;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .modal-buttons button {
-            flex: 1;
-        }
-
-        .winner-message {
-            font-size: 1.5em;
-            color: #ff6b6b;
-            margin: 20px 0;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 1.8em;
-            }
-
-            h2 {
-                font-size: 1.3em;
-            }
-
-            .button-group {
-                flex-direction: column;
-            }
-
-            button {
-                min-width: auto;
-            }
-
-            .bingo-card {
-                gap: 8px;
-            }
-
-            .bingo-cell {
-                font-size: 1em;
-            }
-
-            .bingo-button {
-                padding: 15px 30px;
-                font-size: 1.1em;
-            }
+        #status {
+            margin-top: 15px;
+            font-size: 1.2em;
+            text-shadow: 0 0 10px #67c7ff;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- NOVO Tela 1: Cadastro do Jogador e Entrada na Sala -->
-        <div class="screen active" id="screen1_registration">
-            <h1>🎰 BINNGO</h1>
-            <h2>Bem-vindo!</h2>
 
-            <div class="form-group">
-                <label for="playerNameInput">Nome:</label>
-                <input type="text" id="playerNameInput" placeholder="Digite seu nome">
-            </div>
+    <h1>Cartela do Jogador</h1>
 
-            <div class="form-group">
-                <label for="playerSurnameInput">Sobrenome:</label>
-                <input type="text" id="playerSurnameInput" placeholder="Digite seu sobrenome">
-            </div>
+    <div class="panel">
 
-            <div class="form-group">
-                <label for="roomCodeInput">Código da Sala (ou via QR Code):</label>
-                <input type="text" id="roomCodeInput" placeholder="Ex: ABCDE123">
-            </div>
+        <input id="playerName" placeholder="Seu nome">
+        <input id="roomCode" placeholder="Código da sala">
 
-            <div class="button-group">
-                <button class="btn-primary" onclick="confirmPlayerRegistration()">Entrar na Sala</button>
-            </div>
-        </div>
+        <button id="joinRoom">Entrar</button>
 
-        <!-- Tela 2: Espera (Antiga screen1, agora com ID screen2_waiting) -->
-        <div class="screen" id="screen2_waiting">
-            <h1>🎰 BINNGO</h1>
-            <h2>Aguarde o início do jogo</h2>
+        <div id="bingoCard"></div>
 
-            <div class="waiting-message">
-                ⏳ Aguardando o administrador iniciar...
-            </div>
+        <button id="checkBingo" disabled>Chamar Bingo</button>
 
-            <div class="rules">
-                <div class="rules-title">📋 Regras da Partida:</div>
-                <ul class="rules-list" id="rulesList"></ul>
-            </div>
-        </div>
+        <div id="status"></div>
 
-        <!-- Tela 3: Jogo (Antiga screen2, agora com ID screen3_game) -->
-        <div class="screen" id="screen3_game">
-            <h1>🎰 BINNGO</h1>
-            <h2>Sua Cartela</h2>
-
-            <div class="bingo-card" id="bingoCard"></div>
-
-            <button class="bingo-button" id="bingoBtn" onclick="callBingo()" disabled>BINGO!</button>
-
-            <div class="button-group">
-                <button class="btn-secondary" onclick="goToScreen('screen2_waiting')">Ver Regras</button>
-            </div>
-        </div>
-
-        <!-- Modal: Vencedor -->
-        <div class="modal" id="winnerModal">
-            <div class="modal-content">
-                <h2>🎉 BINGO!</h2>
-                <p id="winnerMessage"></p>
-                <div class="modal-buttons">
-                    <button class="btn-primary" onclick="closeWinnerModal()">OK</button>
-                </div>
-            </div>
-        </div>
     </div>
 
-    <script>
-        // Estado do jogador
-        let playerState = {
-            name: '',
-            surname: '',
-            roomCode: '',
-            cartelas: [],
-            currentCartela: 0,
-            gameStarted: false
-        };
-
-        // Obter parâmetro da URL
-        function getUrlParameter(name) {
-            const url = new URL(window.location.href);
-            return url.searchParams.get(name);
-        }
-
-        // Carregar estado do sessionStorage
-        function loadPlayerState() {
-            const saved = sessionStorage.getItem('playerState');
-            if (saved) {
-                playerState = JSON.parse(saved);
-            }
-        }
-
-        // Salvar estado no sessionStorage
-        function savePlayerState() {
-            sessionStorage.setItem('playerState', JSON.stringify(playerState));
-        }
-
-        // NOVO: Confirmar dados do jogador e entrada na sala
-        function confirmPlayerRegistration() {
-            const name = document.getElementById('playerNameInput').value.trim();
-            const surname = document.getElementById('playerSurnameInput').value.trim();
-            const manualRoomCode = document.getElementById('roomCodeInput').value.trim();
-            const urlRoomCode = getUrlParameter('room');
-
-            if (!name || !surname) {
-                alert('Por favor, preencha seu nome e sobrenome!');
-                return;
-            }
-
-            let finalRoomCode = manualRoomCode || urlRoomCode;
-
-            if (!finalRoomCode) {
-                alert('Por favor, insira o código da sala ou acesse via QR Code!');
-                return;
-            }
-
-            playerState.name = name;
-            playerState.surname = surname;
-            playerState.roomCode = finalRoomCode;
-
-            savePlayerState();
-            loadGameConfig(); // Carrega as configurações da sala
-            goToScreen('screen2_waiting'); // Vai para a tela de espera
-        }
-
-        // Carregar configurações do jogo
-        function loadGameConfig() {
-            // Acessa o estado do jogo do admin, que está no localStorage
-            const allGameStates = JSON.parse(localStorage.getItem('bingoGameStates') || '{}');
-            const gameState = allGameStates[playerState.roomCode];
-
-            if (!gameState) {
-                alert('Sala não encontrada ou não iniciada pelo administrador.');
-                // Opcional: Redirecionar de volta para a tela de registro ou index
-                // window.location.href = 'index.html'; 
-                return;
-            }
-            
-            const rules = [];
-            if (gameState.enablePassword) rules.push('🔐 Cartelas protegidas por senha');
-            if (gameState.autoFill) rules.push('✅ Auto preenchimento ativado');
-            rules.push(`📊 Máximo ${gameState.maxCartelas} cartelas por participante`);
-            rules.push(`👥 Máximo ${gameState.maxParticipants} participantes`);
-            if (gameState.winnerContinues) rules.push('🔄 Vencedor continua na partida');
-            else rules.push('🚫 Vencedor não continua na partida');
-
-
-            const rulesList = document.getElementById('rulesList');
-            rulesList.innerHTML = rules.map(rule => `<li>${rule}</li>`).join('');
-
-            // Se o jogo já estiver iniciado, o jogador vai direto para a tela de jogo
-            if (gameState.gameStarted && !playerState.gameStarted) {
-                playerState.gameStarted = true;
-                savePlayerState();
-                renderCartela();
-                goToScreen('screen3_game');
-            }
-        }
-
-        // Gerar cartela
-        function generateCartela() {
-            const cartela = [];
-            const columns = [
-                Array.from({length: 15}, (_, i) => i + 1), // B (1-15)
-                Array.from({length: 15}, (_, i) => i + 16), // I (16-30)
-                Array.from({length: 15}, (_, i) => i + 31), // N (31-45)
-                Array.from({length: 15}, (_, i) => i + 46), // G (46-60)
-                Array.from({length: 15}, (_, i) => i + 61)  // O (61-75)
-            ];
-
-            for (let col = 0; col < 5; col++) {
-                const shuffled = columns[col].sort(() => Math.random() - 0.5);
-                for (let row = 0; row < 5; row++) {
-                    // O centro (N3) é sempre livre
-                    const number = (col === 2 && row === 2) ? 'FREE' : shuffled.pop();
-                    cartela.push({
-                        number: number,
-                        marked: (col === 2 && row === 2) // Marca o centro como livre
-                    });
-                }
-            }
-
-            return cartela;
-        }
-
-        // Renderizar cartela
-        function renderCartela() {
-            // Se o jogador não tiver cartelas, gera uma
-            if (playerState.cartelas.length === 0) {
-                playerState.cartelas.push(generateCartela());
-                savePlayerState();
-            }
-
-            const cartela = playerState.cartelas[playerState.currentCartela];
-            const bingoCard = document.getElementById('bingoCard');
-            bingoCard.innerHTML = '';
-
-            cartela.forEach((cell, index) => {
-                const cellDiv = document.createElement('div');
-                cellDiv.className = 'bingo-cell';
-                if (cell.marked) cellDiv.classList.add('marked');
-                if (cell.number === 'FREE') cellDiv.classList.add('center');
-                cellDiv.textContent = cell.number;
-                
-                // Apenas permite marcar se o autoFill não estiver ativado
-                const allGameStates = JSON.parse(localStorage.getItem('bingoGameStates') || '{}');
-                const gameState = allGameStates[playerState.roomCode];
-                if (!gameState || !gameState.autoFill) {
-                    cellDiv.onclick = () => toggleCell(index);
-                } else {
-                    cellDiv.style.cursor = 'default'; // Desabilita cursor de clique se autoFill
-                }
-                
-                bingoCard.appendChild(cellDiv);
-            });
-
-            checkBingo();
-        }
-
-        // Alternar célula
-        function toggleCell(index) {
-            const cartela = playerState.cartelas[playerState.currentCartela];
-            // Não permite desmarcar o centro
-            if (cartela[index].number === 'FREE') return;
-
-            cartela[index].marked = !cartela[index].marked;
-            savePlayerState();
-            renderCartela();
-        }
-
-        // Verificar bingo
-        function checkBingo() {
-            const cartela = playerState.cartelas[playerState.currentCartela];
-            const btn = document.getElementById('bingoBtn');
-
-            // Helper para verificar se uma célula está marcada
-            const isMarked = (idx) => cartela[idx].marked;
-
-            // Verificar linhas
-            for (let row = 0; row < 5; row++) {
-                if (Array.from({length: 5}, (_, col) => isMarked(row * 5 + col)).every(Boolean)) {
-                    btn.disabled = false;
-                    return;
-                }
-            }
-
-            // Verificar colunas
-            for (let col = 0; col < 5; col++) {
-                if (Array.from({length: 5}, (_, row) => isMarked(row * 5 + col)).every(Boolean)) {
-                    btn.disabled = false;
-                    return;
-                }
-            }
-
-            // Verificar diagonais
-            let diag1 = true, diag2 = true;
-            for (let i = 0; i < 5; i++) {
-                if (!isMarked(i * 5 + i)) diag1 = false; // Principal
-                if (!isMarked(i * 5 + (4 - i))) diag2 = false; // Secundária
-            }
-            if (diag1 || diag2) {
-                btn.disabled = false;
-                return;
-            }
-
-            // Verificar cartela cheia
-            if (cartela.every(cell => cell.marked)) {
-                btn.disabled = false;
-                return;
-            }
-
-            btn.disabled = true;
-        }
-
-        // Chamar bingo
-        function callBingo() {
-            const allGameStates = JSON.parse(localStorage.getItem('bingoGameStates') || '{}');
-            const gameState = allGameStates[playerState.roomCode];
-
-            if (!gameState) {
-                alert('Erro: Estado da sala não encontrado.');
-                return;
-            }
-
-            // Adiciona o jogador à lista de bingos chamados para validação do admin
-            gameState.bingoCalls = gameState.bingoCalls || [];
-            gameState.bingoCalls.push({
-                playerName: playerState.name,
-                playerSurname: playerState.surname,
-                roomCode: playerState.roomCode,
-                cartela: playerState.cartelas[playerState.currentCartela],
-                timestamp: Date.now()
-            });
-            localStorage.setItem('bingoGameStates', JSON.stringify(allGameStates));
-
-            // Exibe mensagem de sucesso para o jogador
-            document.getElementById('winnerMessage').textContent = `Parabéns ${playerState.name}! Você chamou BINGO! Aguarde a validação do administrador.`;
-            document.getElementById('winnerModal').classList.add('active');
-            document.getElementById('bingoBtn').disabled = true; // Desabilita o botão após chamar
-        }
-
-        // Fechar modal de vencedor
-        function closeWinnerModal() {
-            document.getElementById('winnerModal').classList.remove('active');
-        }
-
-        // Ir para tela
-        function goToScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(screen => {
-                screen.classList.remove('active');
-            });
-            document.getElementById(screenId).classList.add('active');
-        }
-
-        // Inicializar
-        document.addEventListener('DOMContentLoaded', function() {
-            loadPlayerState();
-
-            const urlRoomCode = getUrlParameter('room');
-            const roomCodeInput = document.getElementById('roomCodeInput');
-
-            // Preenche o campo de código da sala se vier da URL
-            if (urlRoomCode) {
-                roomCodeInput.value = urlRoomCode;
-            }
-
-            // Se o jogador já tem nome e código de sala, vai direto para a tela de espera
-            if (playerState.name && playerState.roomCode) {
-                document.getElementById('playerNameInput').value = playerState.name;
-                document.getElementById('playerSurnameInput').value = playerState.surname;
-                roomCodeInput.value = playerState.roomCode; // Garante que o campo esteja preenchido
-                loadGameConfig();
-                goToScreen('screen2_waiting');
-            } else {
-                // Caso contrário, exibe a tela de registro
-                goToScreen('screen1_registration');
-            }
-
-            // Gerar cartelas se ainda não tiver
-            if (playerState.cartelas.length === 0) {
-                playerState.cartelas.push(generateCartela());
-                savePlayerState();
-            }
-
-            // Loop de atualização do estado do jogo
-            setInterval(() => {
-                if (!playerState.roomCode) return; // Não faz nada se não estiver em uma sala
-
-                const allGameStates = JSON.parse(localStorage.getItem('bingoGameStates') || '{}');
-                const gameState = allGameStates[playerState.roomCode];
-
-                if (!gameState) {
-                    // Se a sala não existe mais (admin encerrou), notifica o jogador
-                    if (playerState.gameStarted) { // Apenas se o jogo já tinha começado
-                        alert('O administrador encerrou a partida. Você será redirecionado para a página inicial.');
-                        sessionStorage.removeItem('playerState'); // Limpa o estado do jogador
-                        window.location.href = 'index.html'; // Redireciona para a página inicial
-                    }
-                    return;
-                }
-
-                // Sincroniza o estado do jogo
-                if (gameState.gameStarted && !playerState.gameStarted) {
-                    playerState.gameStarted = true;
-                    savePlayerState();
-                    renderCartela();
-                    goToScreen('screen3_game');
-                }
-
-                // Auto-preenchimento
-                if (gameState.autoFill && gameState.lastCalledNumber) {
-                    const cartela = playerState.cartelas[playerState.currentCartela];
-                    const foundIndex = cartela.findIndex(cell => cell.number === gameState.lastCalledNumber && !cell.marked);
-                    if (foundIndex !== -1) {
-                        cartela[foundIndex].marked = true;
-                        savePlayerState();
-                        renderCartela();
-                    }
-                }
-
-                // Verifica se o jogador foi um vencedor validado
-                if (gameState.lastWinner && gameState.lastWinner.playerName === playerState.name && gameState.lastWinner.playerSurname === playerState.surname) {
-                    document.getElementById('winnerMessage').textContent = `Parabéns ${playerState.name}! Você venceu a rodada por ${gameState.lastWinner.prizeType}!`;
-                    document.getElementById('winnerModal').classList.add('active');
-                    // Limpa o lastWinner para não mostrar a mensagem repetidamente
-                    delete gameState.lastWinner;
-                    localStorage.setItem('bingoGameStates', JSON.stringify(allGameStates));
-                }
-
-            }, 2000); // Atualiza a cada 2 segundos
-        });
-    </script>
-</body>
-</html>
+    <script src="firebase.js"></script>
+    <script src="core.js"></script>
+    <script
