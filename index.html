@@ -3,118 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bingo Digital - Início</title>
+    <title>BINNGO - Jogo de Bingo Digital</title>
     <style>
-        :root {
-            --primary-color: #4CAF50; /* Verde */
-            --secondary-color: #FFC107; /* Amarelo */
-            --accent-color: #FF5722; /* Laranja */
-            --text-color: #333;
-            --bg-gradient-start: #4CAF50;
-            --bg-gradient-end: #FFC107;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(45deg, var(--bg-gradient-start), var(--bg-gradient-end));
-            background-size: 400% 400%;
-            animation: gradientAnimation 15s ease infinite;
-            color: white;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            padding: 20px;
         }
 
         .container {
-            background-color: rgba(255, 255, 255, 0.95);
-            padding: 40px 60px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
-            width: 90%;
-            animation: fadeIn 1s ease-out;
+            text-align: center;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px 40px;
+            max-width: 600px;
+            width: 100%;
+            animation: slideIn 0.5s ease-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         h1 {
-            color: var(--accent-color);
-            margin-bottom: 30px;
-            font-size: 2.5em;
+            color: #667eea;
+            font-size: 3.5em;
+            margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 40px;
+            line-height: 1.6;
         }
 
         .button-group {
             display: flex;
-            flex-direction: column;
             gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 18px 25px;
-            font-size: 1.3em;
-            font-weight: bold;
-            color: white;
-            background-color: var(--primary-color);
+        button {
+            padding: 20px 40px;
+            font-size: 1.2em;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-weight: 700;
+            transition: all 0.3s;
+            min-width: 200px;
         }
 
-        .btn:hover {
-            background-color: #388E3C; /* Verde mais escuro */
+        .btn-admin {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-admin:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
         }
 
-        .btn.player {
-            background-color: var(--accent-color);
+        .btn-player {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
         }
 
-        .btn.player:hover {
-            background-color: #E64A19; /* Laranja mais escuro */
+        .btn-player:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(245, 87, 108, 0.4);
+        }
+
+        .emoji {
+            font-size: 4em;
+            margin-bottom: 20px;
         }
 
         @media (max-width: 600px) {
             .container {
-                padding: 30px 20px;
+                padding: 40px 20px;
             }
+
             h1 {
-                font-size: 2em;
+                font-size: 2.5em;
             }
-            .btn {
-                font-size: 1.1em;
-                padding: 15px 20px;
+
+            p {
+                font-size: 1em;
+            }
+
+            button {
+                min-width: 150px;
+                padding: 15px 30px;
+                font-size: 1em;
+            }
+
+            .button-group {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Bem-vindo ao Bingo Digital!</h1>
+        <div class="emoji">🎰</div>
+        <h1>BINNGO</h1>
+        <p>Bem-vindo ao jogo de Bingo Digital! Escolha seu papel para começar:</p>
+
         <div class="button-group">
-            <a href="admin.html" class="btn admin">Administrador</a>
-            <a href="player.html" class="btn player">Jogador</a>
+            <button class="btn-admin" onclick="goToAdmin()">👨‍💼 Administrador</button>
+            <button class="btn-player" onclick="goToPlayer()">🎮 Jogador</button>
         </div>
     </div>
+
+    <script>
+        function goToAdmin() {
+            window.location.href = 'https://wcorsini79.github.io/Bingool/admin.html';
+        }
+
+        function goToPlayer() {
+            window.location.href = 'https://wcorsini79.github.io/Bingool/player.html';
+        }
+    </script>
 </body>
 </html>
