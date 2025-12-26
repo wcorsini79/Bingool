@@ -3,243 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>binngo MAKER - Administrador</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Bingo Digital - Administrador</title>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
+            background: linear-gradient(135deg, #6dd5ed, #2193b0);
+            color: #333;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
+            align-items: flex-start;
             min-height: 100vh;
-            background: linear-gradient(135deg, #8bc34a, #ffeb3b, #ff9800, #e91e63);
-            background-size: 400% 400%;
-            animation: gradientAnimation 15s ease infinite;
-            color: #fff;
-            text-align: center;
-            padding-bottom: 50px; /* Espaço para o rodapé */
+            padding: 20px;
+            box-sizing: border-box;
         }
-
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .header {
+        .container {
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+        }
+        h1, h2 {
+            color: #2193b0;
             margin-bottom: 20px;
         }
-
-        .header h1 {
-            font-family: 'Press Start 2P', cursive;
-            color: #ffeb3b;
-            font-size: 2em;
-            margin: 0;
-            text-shadow: 3px 3px #e91e63;
-            letter-spacing: 1px;
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
         }
-
-        .container {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            max-width: 800px;
-            width: 90%;
-            margin-top: 20px;
-            animation: fadeIn 1s ease-out;
-            text-align: left;
+        .screen.active {
+            display: block;
         }
-
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        h2 {
-            color: #ffeb3b;
-            font-size: 1.8em;
+        .form-group {
             margin-bottom: 20px;
-            text-align: center;
+            text-align: left;
         }
-
-        label {
+        .form-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: bold;
-            color: #fff;
+            color: #555;
         }
-
-        input[type="text"],
-        input[type="number"],
-        input[type="password"] {
+        .form-group input[type="text"],
+        .form-group input[type="number"] {
             width: calc(100% - 20px);
             padding: 12px;
-            margin-bottom: 20px;
-            border: none;
+            border: 1px solid #ccc;
             border-radius: 8px;
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #333;
             font-size: 1em;
+            box-sizing: border-box;
         }
-
-        input[type="checkbox"] {
+        .form-group input[type="checkbox"] {
             margin-right: 10px;
-            transform: scale(1.5);
-            vertical-align: middle;
+            transform: scale(1.2);
         }
-
-        .checkbox-group {
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .button-group {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
         .btn {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #333;
+            border: none;
             padding: 12px 25px;
+            border-radius: 8px;
             font-size: 1.1em;
             font-weight: bold;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            margin: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
         .btn-primary {
-            background-color: #4CAF50; /* Verde */
-            box-shadow: 0 5px #388E3C;
+            background: linear-gradient(45deg, #2193b0, #6dd5ed);
+            color: #fff;
         }
-        .btn-primary:hover { background-color: #66BB6A; transform: translateY(-2px); box-shadow: 0 7px #388E3C; }
-
-        .btn-secondary {
-            background-color: #2196F3; /* Azul */
-            box-shadow: 0 5px #1976D2;
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #6dd5ed, #2193b0);
         }
-        .btn-secondary:hover { background-color: #64B5F6; transform: translateY(-2px); box-shadow: 0 7px #1976D2; }
-
         .btn-danger {
-            background-color: #F44336; /* Vermelho */
-            box-shadow: 0 5px #D32F2F;
+            background: linear-gradient(45deg, #FF6B6B, #EE4266);
+            color: #fff;
         }
-        .btn-danger:hover { background-color: #EF5350; transform: translateY(-2px); box-shadow: 0 7px #D32F2F; }
-
-        .btn-warning {
-            background-color: #FFC107; /* Amarelo */
-            color: #333;
-            box-shadow: 0 5px #FFA000;
+        .btn-danger:hover {
+            background: linear-gradient(45deg, #EE4266, #FF6B6B);
         }
-        .btn-warning:hover { background-color: #FFD54F; transform: translateY(-2px); box-shadow: 0 7px #FFA000; }
-
-        .screen {
-            display: none; /* Esconde todas as telas por padrão */
-        }
-
-        #admin-waiting-screen .qr-code-container {
-            background-color: #fff;
-            padding: 15px;
+        .qr-code-container {
+            margin: 30px auto;
+            padding: 20px;
+            background: #f9f9f9;
             border-radius: 10px;
-            display: inline-block;
-            margin-top: 20px;
+            border: 1px dashed #ccc;
+            max-width: 300px;
         }
-
-        #admin-waiting-screen .share-link {
+        #qrCodeImg {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 15px;
+        }
+        .share-link {
             word-break: break-all;
-            background-color: rgba(255, 255, 255, 0.1);
+            background: #eee;
             padding: 10px;
             border-radius: 5px;
-            margin-top: 15px;
             font-size: 0.9em;
+            margin-top: 10px;
+            border: 1px solid #ddd;
         }
-
-        #admin-drawing-screen .bingo-globe {
-            width: 150px;
-            height: 150px;
-            background-color: #f0f0f0;
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #555;
+        }
+        .stats div span {
+            color: #2193b0;
+            font-size: 1.4em;
+            margin-left: 5px;
+        }
+        .bingo-globe {
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
+            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+            border: 5px solid #ccc;
             margin: 30px auto;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 3em;
             font-weight: bold;
-            color: #333;
-            border: 5px solid #ccc;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.2);
+            color: #e74c3c;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.2);
             position: relative;
             overflow: hidden;
         }
-
-        #admin-drawing-screen .bingo-globe::before {
+        .bingo-globe::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 70% 30%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 60%);
             border-radius: 50%;
         }
-
-        #admin-drawing-screen .bingo-globe.spinning {
+        .bingo-globe.spinning {
             animation: spin 1s linear infinite;
         }
-
         @keyframes spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-
-        #admin-drawing-screen .last-drawn-ball {
-            font-size: 4em;
-            font-weight: bold;
-            color: #ffeb3b;
-            text-shadow: 4px 4px #e91e63;
-            margin-top: 20px;
+        #currentBall {
+            z-index: 1;
+            animation: popIn 0.5s ease-out;
         }
-
-        #admin-drawing-screen .drawn-balls-history {
+        @keyframes popIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .drawn-numbers {
             margin-top: 30px;
-            background-color: rgba(255, 255, 255, 0.1);
             padding: 15px;
+            background: #f0f8ff;
             border-radius: 10px;
-            max-height: 200px;
-            overflow-y: auto;
+            text-align: left;
+            border: 1px solid #d0e0f0;
+        }
+        .drawn-numbers h3 {
+            color: #2193b0;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .drawn-numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+            gap: 8px;
+        }
+        .drawn-number-item {
+            background: #e0f7fa;
+            border: 1px solid #a7d9e0;
+            border-radius: 5px;
+            padding: 8px 0;
+            font-weight: bold;
+            font-size: 0.9em;
+            color: #00796b;
             text-align: center;
         }
-
-        #admin-drawing-screen .drawn-balls-history span {
-            display: inline-block;
-            background-color: #2196F3;
-            color: #fff;
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            line-height: 35px;
-            margin: 5px;
-            font-size: 0.9em;
-            font-weight: bold;
+        .drawn-number-item.last-drawn {
+            background: #ffeb3b;
+            border-color: #fbc02d;
+            color: #c0ca33;
+            animation: highlight 1s infinite alternate;
+        }
+        @keyframes highlight {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
         }
 
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -249,705 +225,704 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0,0,0,0.6);
             justify-content: center;
             align-items: center;
         }
-
         .modal-content {
             background-color: #fefefe;
             margin: auto;
             padding: 30px;
-            border-radius: 10px;
-            width: 80%;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             max-width: 500px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 90%;
             text-align: center;
-            color: #333;
-            position: relative;
+            animation: slideIn 0.4s ease-out;
         }
-
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
         .modal-content h3 {
-            color: #e91e63;
+            color: #e74c3c;
             margin-bottom: 20px;
-            font-size: 1.5em;
+            font-size: 1.8em;
         }
-
         .modal-content p {
-            margin-bottom: 15px;
             font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #555;
         }
-
-        .modal-content .button-group {
+        .modal-buttons {
             margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .modal-buttons .btn {
+            padding: 10px 20px;
+            font-size: 1em;
         }
 
-        .close-button {
-            color: #aaa;
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
+        /* Roleta de Desempate */
+        .roulette-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0f8ff;
+            border-radius: 10px;
+            border: 1px solid #d0e0f0;
         }
-
-        .close-button:hover,
-        .close-button:focus {
-            color: #333;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        #tie-breaker-modal .roulette-container {
-            margin: 20px auto;
-            width: 200px;
-            height: 200px;
+        .roulette-wheel {
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
-            background-color: #ccc;
+            background: conic-gradient(#FFD700 0% 14.28%, #FFA500 14.28% 28.56%, #FF6B6B 28.56% 42.84%, #EE4266 42.84% 57.12%, #2193b0 57.12% 71.4%, #6dd5ed 71.4% 85.68%, #90EE90 85.68% 100%);
+            margin: 20px auto;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 3em;
+            font-size: 2.5em;
             font-weight: bold;
-            color: #333;
-            border: 5px solid #eee;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+            color: #fff;
+            border: 5px solid #ccc;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
             position: relative;
-            overflow: hidden;
+            transition: transform 3s ease-out;
         }
-
-        #tie-breaker-modal .roulette-container.spinning {
-            animation: spin 0.5s linear infinite;
+        .roulette-wheel::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 20px solid #e74c3c;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
         }
-
-        #tie-breaker-modal .player-roll-buttons {
+        .roulette-players {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
             margin-top: 20px;
         }
-
-        #tie-breaker-modal .player-roll-buttons .btn {
-            background-color: #FF9800;
-            box-shadow: 0 5px #F57C00;
+        .roulette-player-item {
+            background: #e0f7fa;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #a7d9e0;
+            font-weight: bold;
+            color: #00796b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
         }
-        #tie-breaker-modal .player-roll-buttons .btn:hover { background-color: #FFB74D; transform: translateY(-2px); box-shadow: 0 7px #F57C00; }
-        #tie-breaker-modal .player-roll-buttons .btn:disabled {
-            background-color: #BDBDBD;
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
+        .roulette-player-item span {
+            font-size: 1.2em;
+            color: #2193b0;
         }
-
-        .footer {
-            margin-top: 40px;
+        .roulette-player-item .btn {
+            margin-top: 10px;
+            padding: 8px 15px;
             font-size: 0.9em;
-            color: rgba(255, 255, 255, 0.7);
+        }
+        .roulette-winner {
+            margin-top: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #28a745;
         }
 
+        /* Responsividade */
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.5em;
-            }
-            h2 {
-                font-size: 1.4em;
-            }
             .container {
                 padding: 20px;
+            }
+            h1 {
+                font-size: 1.8em;
             }
             .btn {
                 padding: 10px 20px;
                 font-size: 1em;
             }
-            #admin-drawing-screen .bingo-globe {
-                width: 120px;
-                height: 120px;
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .bingo-globe {
+                width: 150px;
+                height: 150px;
                 font-size: 2.5em;
             }
-            #admin-drawing-screen .last-drawn-ball {
-                font-size: 3em;
+            .drawn-numbers-grid {
+                grid-template-columns: repeat(auto-fill, minmax(35px, 1fr));
+                gap: 5px;
             }
             .modal-content {
-                width: 95%;
                 padding: 20px;
             }
-        }
-
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 1.2em;
-            }
-            h2 {
-                font-size: 1.2em;
-            }
-            .container {
-                padding: 15px;
-            }
-            .btn {
-                font-size: 0.9em;
-                padding: 8px 15px;
-            }
-            .checkbox-group {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            #admin-drawing-screen .bingo-globe {
-                width: 100px;
-                height: 100px;
-                font-size: 2em;
-            }
-            #admin-drawing-screen .last-drawn-ball {
-                font-size: 2.5em;
-            }
             .modal-content h3 {
-                font-size: 1.2em;
-            }
-            .modal-content p {
-                font-size: 0.9em;
+                font-size: 1.5em;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>binngo MAKER</h1>
-    </div>
-
     <div class="container">
+        <h1>Painel do Administrador</h1>
+
         <!-- Screen 1: Cadastro da Sala -->
-        <div id="admin-setup-screen" class="screen">
-            <h2>Crie sua Sala de Bingo!</h2>
-            <label for="room-name">Nome da Sala:</label>
-            <input type="text" id="room-name" placeholder="Ex: Bingo da Família Silva" required>
-            <div class="checkbox-group">
-                <label>
-                    <input type="checkbox" id="winner-continues"> O vencedor continua na partida?
-                </label>
+        <div id="screen1" class="screen active">
+            <h2>Crie sua Sala de Bingo</h2>
+            <div class="form-group">
+                <label for="roomName">Nome da Sala:</label>
+                <input type="text" id="roomName" placeholder="Ex: Bingo da Família Silva" required>
             </div>
-            <div class="button-group">
-                <button class="btn btn-primary" onclick="setupRoom()">Próximo</button>
+            <div class="form-group">
+                <input type="checkbox" id="winnerContinues">
+                <label for="winnerContinues">Vencedor continua na partida?</label>
             </div>
+            <button class="btn btn-primary" onclick="createRoom()">Criar Sala</button>
         </div>
 
         <!-- Screen 2: Configuração do Bingo -->
-        <div id="admin-config-screen" class="screen">
+        <div id="screen2" class="screen">
             <h2>Configure o seu BINNGO!</h2>
-            <div class="checkbox-group">
-                <label>
-                    <input type="checkbox" id="enable-password"> Ativar Senha nas Cartelas (opcional)
-                </label>
-                <label>
-                    <input type="checkbox" id="enable-auto-fill" checked> Ativar Auto Preencher Cartelas
-                </label>
+            <div class="form-group">
+                <input type="checkbox" id="enableCardPassword">
+                <label for="enableCardPassword">Ativar Senha nas Cartelas (não implementado)</label>
             </div>
-            <label for="max-cards">Quantidade Máxima de CARTELAS por participante:</label>
-            <input type="number" id="max-cards" value="5" min="1" max="100">
-            <label for="max-players">Quantidade Máxima de PARTICIPANTES:</label>
-            <input type="number" id="max-players" value="50" min="1" max="999">
-            <div class="button-group">
-                <button class="btn btn-primary" onclick="saveConfig()">Salvar Configurações</button>
-                <button class="btn btn-danger" onclick="cancelBingo()">Cancelar BINGO</button>
+            <div class="form-group">
+                <input type="checkbox" id="enableAutoFill">
+                <label for="enableAutoFill">Ativar Auto Preencher (para jogadores)</label>
             </div>
+            <div class="form-group">
+                <label for="maxCardsPerPlayer">Quantidade Máxima de CARTELAS por participante:</label>
+                <input type="number" id="maxCardsPerPlayer" value="5" min="1">
+            </div>
+            <div class="form-group">
+                <label for="maxParticipants">Quantidade Máxima de PARTICIPANTES:</label>
+                <input type="number" id="maxParticipants" value="50" min="1">
+            </div>
+            <button class="btn btn-primary" onclick="saveConfig()">Salvar Configurações</button>
+            <button class="btn btn-danger" onclick="cancelBingo()">Cancelar BINGO</button>
         </div>
 
-        <!-- Screen 3: Espera dos Jogadores -->
-        <div id="admin-waiting-screen" class="screen">
-            <h2>Aguardando Jogadores...</h2>
-            <p>Sala: <strong id="waiting-room-name"></strong></p>
-            <p>Usuários Ativos: <span id="active-users-count">0</span></p>
-            <p>Cartelas Ativas: <span id="active-cards-count">0</span></p>
-
+        <!-- Screen 3: Espera por Jogadores -->
+        <div id="screen3" class="screen">
+            <h2>Sala: <span id="displayRoomName"></span> (<span id="displayRoomCode"></span>)</h2>
             <p>Compartilhe este link ou QR Code com os jogadores:</p>
             <div class="qr-code-container">
-                <img id="qr-code-img" src="" alt="QR Code da Sala">
+                <img id="qrCodeImg" alt="QR Code da Sala">
+                <div class="share-link" id="shareLink"></div>
+                <button class="btn" onclick="copyShareLink()">Copiar Link</button>
             </div>
-            <div class="share-link" id="share-link-display"></div>
-            <div class="button-group">
-                <button class="btn btn-secondary" onclick="copyShareLink()">Copiar Link</button>
-                <button class="btn btn-primary" onclick="startBingo()">Iniciar Bingo</button>
-                <button class="btn btn-danger" onclick="cancelBingo()">Encerrar Bingo</button>
+            <div class="stats">
+                <div>Usuários Ativos: <span id="activePlayersCount">0</span></div>
+                <div>Cartelas Ativas: <span id="activeCardsCount">0</span></div>
+            </div>
+            <button class="btn btn-primary" onclick="startGame()">Iniciar Bingo</button>
+            <button class="btn btn-danger" onclick="cancelBingo()">Encerrar Sala</button>
+        </div>
+
+        <!-- Screen 4: Sorteio do Bingo -->
+        <div id="screen4" class="screen">
+            <h2>Sala: <span id="gameRoomName"></span></h2>
+            <p>Próxima Bola:</p>
+            <div class="bingo-globe" id="bingoGlobe">
+                <span id="currentBall">--</span>
+            </div>
+            <button class="btn btn-primary" id="nextBallBtn" onclick="drawNextBall()">Próxima Bola</button>
+            <button class="btn btn-danger" onclick="endGame()">Encerrar Bingo</button>
+
+            <div class="drawn-numbers">
+                <h3>Bolas Sorteadas:</h3>
+                <div class="drawn-numbers-grid" id="drawnNumbersGrid">
+                    <!-- Números sorteados aparecerão aqui -->
+                </div>
+            </div>
+            <div class="stats">
+                <div>Usuários Ativos: <span id="gameActivePlayersCount">0</span></div>
+                <div>Cartelas Ativas: <span id="gameActiveCardsCount">0</span></div>
             </div>
         </div>
 
-        <!-- Screen 4: Sorteio das Bolas -->
-        <div id="admin-drawing-screen" class="screen">
-            <h2>Sorteio de Bolas</h2>
-            <p>Sala: <strong id="drawing-room-name"></strong></p>
-            <div class="bingo-globe" id="bingo-globe">
-                <span id="globe-number"></span>
-            </div>
-            <p>Última Bola Sorteada:</p>
-            <div class="last-drawn-ball" id="last-drawn-ball">--</div>
-
-            <div class="button-group">
-                <button class="btn btn-primary" id="next-ball-btn" onclick="drawNextBall()">Próxima Bola</button>
-                <button class="btn btn-danger" onclick="endBingo()">Encerrar Bingo</button>
-            </div>
-
-            <h3>Histórico de Bolas:</h3>
-            <div class="drawn-balls-history" id="drawn-balls-history">
-                <!-- Bolas sorteadas aparecerão aqui -->
+        <!-- Modal de Validação de Bingo -->
+        <div id="bingoValidationModal" class="modal">
+            <div class="modal-content">
+                <h3>BINGO CHAMADO!</h3>
+                <p>O jogador <strong id="bingoCallerName"></strong> chamou BINGO!</p>
+                <p>Cartela ID: <strong id="bingoCardId"></strong></p>
+                <p>Tipo de BINGO: <strong id="bingoType"></strong></p>
+                <div class="modal-buttons">
+                    <button class="btn btn-primary" onclick="validateBingo(true)">Validar BINGO</button>
+                    <button class="btn btn-danger" onclick="validateBingo(false)">Invalidar BINGO</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal de Validação de Bingo -->
-    <div id="bingo-validation-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeModal('bingo-validation-modal')">&times;</span>
-            <h3>BINGO Chamado!</h3>
-            <p><strong id="bingo-player-name"></strong> chamou BINGO na cartela <strong id="bingo-card-id"></strong>!</p>
-            <p>Tipo de BINGO: <strong id="bingo-type"></strong></p>
-            <p>Verifique a cartela do jogador para validar.</p>
-            <div class="button-group">
-                <button class="btn btn-primary" onclick="validateBingo(true)">Validar BINGO</button>
-                <button class="btn btn-danger" onclick="validateBingo(false)">Invalidar BINGO</button>
+        <!-- Modal de Desempate -->
+        <div id="tieBreakerModal" class="modal">
+            <div class="modal-content">
+                <h3>Empate para a Premiação!</h3>
+                <p>Os seguintes jogadores empataram:</p>
+                <div class="roulette-container">
+                    <div class="roulette-wheel" id="rouletteWheel">
+                        <span id="rouletteResult">?</span>
+                    </div>
+                    <div class="roulette-players" id="roulettePlayers">
+                        <!-- Jogadores empatados aparecerão aqui -->
+                    </div>
+                    <div class="roulette-winner" id="rouletteWinner"></div>
+                </div>
+                <div class="modal-buttons">
+                    <button class="btn btn-primary" onclick="closeTieBreaker()">Continuar Jogo</button>
+                </div>
             </div>
         </div>
-    </div>
-
-    <!-- Modal de Empate (Roleta) -->
-    <div id="tie-breaker-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeModal('tie-breaker-modal')">&times;</span>
-            <h3>Empate Detectado!</h3>
-            <p>Vários jogadores completaram o BINGO ao mesmo tempo.</p>
-            <p>Roleta para desempate:</p>
-            <div class="roulette-container" id="roulette-container">
-                <span id="roulette-number">--</span>
-            </div>
-            <div class="player-roll-buttons" id="player-roll-buttons">
-                <!-- Botões para cada jogador empatado -->
-            </div>
-            <p id="tie-breaker-message"></p>
-            <div class="button-group">
-                <button class="btn btn-primary" id="confirm-tie-winner-btn" style="display: none;" onclick="confirmTieWinner()">Confirmar Vencedor</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer">
-        <p>&copy; 2023 binngo MAKER. Todos os direitos reservados.</p>
     </div>
 
     <script>
-        const GAME_STATE_KEY = 'bingoGameState';
-        let gameState = {};
-        let currentScreen = '';
-        let bingoGlobeInterval;
-
-        const screens = {
-            setup: document.getElementById('admin-setup-screen'),
-            config: document.getElementById('admin-config-screen'),
-            waiting: document.getElementById('admin-waiting-screen'),
-            drawing: document.getElementById('admin-drawing-screen')
+        // --- Variáveis Globais e Estado ---
+        let adminState = {
+            roomCode: null,
+            roomName: '',
+            winnerContinues: false,
+            enableCardPassword: false, // Não implementado
+            enableAutoFill: true,
+            maxCardsPerPlayer: 5,
+            maxParticipants: 50,
+            gameStarted: false,
+            gameEnded: false,
+            drawnNumbers: [],
+            availableNumbers: Array.from({ length: 75 }, (_, i) => i + 1),
+            players: {}, // { playerId: { name, surname, cards: [], status: 'active' } }
+            bingoCalls: [], // { playerId, cardId, type, timestamp, validated: null }
+            currentTieBreaker: null, // { players: [], results: {} }
+            lastUpdate: Date.now()
         };
 
-        function showScreen(screenId) {
-            Object.values(screens).forEach(screen => screen.style.display = 'none');
-            if (screens[screenId]) {
-                screens[screenId].style.display = 'block';
-                currentScreen = screenId;
+        const BINGO_LETTERS = ['B', 'I', 'N', 'G', 'O'];
+        const BINGO_RANGES = {
+            'B': [1, 15],
+            'I': [16, 30],
+            'N': [31, 45],
+            'G': [46, 60],
+            'O': [61, 75]
+        };
+
+        // --- Funções de Sincronização e Persistência ---
+        function generateRoomCode() {
+            return Math.random().toString(36).substring(2, 8).toUpperCase();
+        }
+
+        function saveAdminState() {
+            if (adminState.roomCode) {
+                adminState.lastUpdate = Date.now();
+                localStorage.setItem(`bingo_admin_${adminState.roomCode}`, JSON.stringify(adminState));
             }
         }
 
-        function loadGameState() {
-            const storedState = localStorage.getItem(GAME_STATE_KEY);
+        function loadAdminState() {
+            const storedState = localStorage.getItem('bingo_admin_current_room');
             if (storedState) {
-                gameState = JSON.parse(storedState);
-            } else {
-                resetGameState();
+                const currentRoomCode = JSON.parse(storedState);
+                const roomData = localStorage.getItem(`bingo_admin_${currentRoomCode}`);
+                if (roomData) {
+                    adminState = JSON.parse(roomData);
+                    // Ensure availableNumbers is correctly initialized if not present or empty
+                    if (!adminState.availableNumbers || adminState.availableNumbers.length === 0) {
+                        adminState.availableNumbers = Array.from({ length: 75 }, (_, i) => i + 1)
+                            .filter(num => !adminState.drawnNumbers.includes(num));
+                    }
+                    updateUI();
+                    return true;
+                }
             }
-            updateAdminUI();
+            return false;
         }
 
-        function saveGameState() {
-            localStorage.setItem(GAME_STATE_KEY, JSON.stringify(gameState));
-        }
-
-        function resetGameState() {
-            gameState = {
-                roomId: generateRoomId(),
-                roomName: '',
-                adminSettings: {
-                    winnerContinues: false,
-                    passwordEnabled: false,
-                    autoFillEnabled: true,
-                    maxCardsPerPlayer: 5,
-                    maxPlayers: 50
-                },
-                gamePhase: 'setup', // setup, config, waiting, playing, bingo_called, tie_breaker, ended
-                drawnBalls: [],
-                lastDrawnBall: null,
-                allBalls: Array.from({ length: 75 }, (_, i) => i + 1), // 1 to 75
-                players: {}, // { playerId: { name, cards: [], status, bingoType } }
-                bingoCall: null, // { playerId, cardId, bingoType, timestamp }
-                tieBreaker: null, // { players: [], rolls: {}, winnerId }
-                winner: null, // { playerId, name, bingoType }
-                rules: []
+        function clearAdminState() {
+            if (adminState.roomCode) {
+                localStorage.removeItem(`bingo_admin_${adminState.roomCode}`);
+                localStorage.removeItem('bingo_admin_current_room');
+            }
+            adminState = {
+                roomCode: null, roomName: '', winnerContinues: false, enableCardPassword: false,
+                enableAutoFill: true, maxCardsPerPlayer: 5, maxParticipants: 50, gameStarted: false,
+                gameEnded: false, drawnNumbers: [], availableNumbers: Array.from({ length: 75 }, (_, i) => i + 1),
+                players: {}, bingoCalls: [], currentTieBreaker: null, lastUpdate: Date.now()
             };
-            saveGameState();
+            updateUI();
+            showScreen('screen1');
         }
 
-        function generateRoomId() {
-            return Math.random().toString(36).substring(2, 9).toUpperCase();
-        }
+        function updateUI() {
+            // Update screen 1 (if active)
+            document.getElementById('roomName').value = adminState.roomName;
+            document.getElementById('winnerContinues').checked = adminState.winnerContinues;
 
-        function updateAdminUI() {
-            // Update common elements
-            document.getElementById('waiting-room-name').textContent = gameState.roomName;
-            document.getElementById('drawing-room-name').textContent = gameState.roomName;
+            // Update screen 2 (if active)
+            document.getElementById('enableCardPassword').checked = adminState.enableCardPassword;
+            document.getElementById('enableAutoFill').checked = adminState.enableAutoFill;
+            document.getElementById('maxCardsPerPlayer').value = adminState.maxCardsPerPlayer;
+            document.getElementById('maxParticipants').value = adminState.maxParticipants;
+
+            // Update screen 3 (if active)
+            document.getElementById('displayRoomName').textContent = adminState.roomName;
+            document.getElementById('displayRoomCode').textContent = adminState.roomCode;
+            document.getElementById('shareLink').textContent = `${window.location.origin}/player.html?room=${adminState.roomCode}`;
+            if (adminState.roomCode) {
+                document.getElementById('qrCodeImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(window.location.origin + '/player.html?room=' + adminState.roomCode)}`;
+            }
 
             // Update player/card counts
-            const activePlayers = Object.values(gameState.players).filter(p => p.status !== 'eliminated').length;
-            const activeCards = Object.values(gameState.players).reduce((sum, p) => sum + p.cards.length, 0);
-            document.getElementById('active-users-count').textContent = activePlayers;
-            document.getElementById('active-cards-count').textContent = activeCards;
+            const activePlayers = Object.values(adminState.players).filter(p => p.status === 'active').length;
+            let activeCards = 0;
+            for (const playerId in adminState.players) {
+                activeCards += adminState.players[playerId].cards.length;
+            }
+            document.getElementById('activePlayersCount').textContent = activePlayers;
+            document.getElementById('activeCardsCount').textContent = activeCards;
+            document.getElementById('gameActivePlayersCount').textContent = activePlayers;
+            document.getElementById('gameActiveCardsCount').textContent = activeCards;
 
-            // Update drawn balls history
-            const drawnBallsHistoryDiv = document.getElementById('drawn-balls-history');
-            drawnBallsHistoryDiv.innerHTML = gameState.drawnBalls.map(ball => `<span>${ball}</span>`).join('');
-            drawnBallsHistoryDiv.scrollTop = drawnBallsHistoryDiv.scrollHeight; // Scroll to bottom
+            // Update screen 4 (if active)
+            document.getElementById('gameRoomName').textContent = adminState.roomName;
+            document.getElementById('currentBall').textContent = adminState.drawnNumbers.length > 0 ? adminState.drawnNumbers[adminState.drawnNumbers.length - 1] : '--';
+            updateDrawnNumbersGrid();
 
-            // Update last drawn ball
-            document.getElementById('last-drawn-ball').textContent = gameState.lastDrawnBall || '--';
+            // Check for bingo calls
+            const pendingBingoCall = adminState.bingoCalls.find(call => call.validated === null);
+            if (pendingBingoCall && !document.getElementById('bingoValidationModal').classList.contains('active')) {
+                showBingoValidationModal(pendingBingoCall);
+            } else if (!pendingBingoCall && document.getElementById('bingoValidationModal').classList.contains('active')) {
+                hideBingoValidationModal();
+            }
 
-            // Show appropriate screen
-            switch (gameState.gamePhase) {
-                case 'setup':
-                    showScreen('setup');
-                    break;
-                case 'config':
-                    showScreen('config');
-                    document.getElementById('room-name').value = gameState.roomName;
-                    document.getElementById('winner-continues').checked = gameState.adminSettings.winnerContinues;
-                    document.getElementById('enable-password').checked = gameState.adminSettings.passwordEnabled;
-                    document.getElementById('enable-auto-fill').checked = gameState.adminSettings.autoFillEnabled;
-                    document.getElementById('max-cards').value = gameState.adminSettings.maxCardsPerPlayer;
-                    document.getElementById('max-players').value = gameState.adminSettings.maxPlayers;
-                    break;
-                case 'waiting':
-                    showScreen('waiting');
-                    generateQRCode();
-                    break;
-                case 'playing':
-                    showScreen('drawing');
-                    break;
-                case 'bingo_called':
-                    showScreen('drawing');
-                    handleBingoCall();
-                    break;
-                case 'tie_breaker':
-                    showScreen('drawing');
-                    handleTieBreaker();
-                    break;
-                case 'ended':
-                    showScreen('setup'); // Or a dedicated "game ended" screen
-                    alert('O bingo foi encerrado!');
-                    resetGameState();
-                    break;
+            // Check for tie breaker
+            if (adminState.currentTieBreaker && !document.getElementById('tieBreakerModal').classList.contains('active')) {
+                showTieBreakerModal(adminState.currentTieBreaker);
+            } else if (!adminState.currentTieBreaker && document.getElementById('tieBreakerModal').classList.contains('active')) {
+                hideTieBreakerModal();
+            }
+
+            // Determine which screen to show
+            if (!adminState.roomCode) {
+                showScreen('screen1');
+            } else if (!adminState.gameStarted) {
+                showScreen('screen3');
+            } else if (adminState.gameStarted && !adminState.gameEnded) {
+                showScreen('screen4');
+            } else if (adminState.gameEnded) {
+                // Could show a game over screen or reset
+                showScreen('screen4'); // For now, stay on game screen
             }
         }
 
-        function setupRoom() {
-            const roomName = document.getElementById('room-name').value.trim();
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // --- Funções de Navegação e Ação ---
+        function createRoom() {
+            const roomName = document.getElementById('roomName').value.trim();
             if (!roomName) {
                 alert('Por favor, insira um nome para a sala.');
                 return;
             }
-            gameState.roomName = roomName;
-            gameState.adminSettings.winnerContinues = document.getElementById('winner-continues').checked;
-            gameState.gamePhase = 'config';
-            saveGameState();
-            updateAdminUI();
+
+            adminState.roomCode = generateRoomCode();
+            adminState.roomName = roomName;
+            adminState.winnerContinues = document.getElementById('winnerContinues').checked;
+            adminState.gameStarted = false;
+            adminState.gameEnded = false;
+            adminState.drawnNumbers = [];
+            adminState.availableNumbers = Array.from({ length: 75 }, (_, i) => i + 1);
+            adminState.players = {};
+            adminState.bingoCalls = [];
+            adminState.currentTieBreaker = null;
+
+            localStorage.setItem('bingo_admin_current_room', JSON.stringify(adminState.roomCode));
+            saveAdminState();
+            updateUI();
+            showScreen('screen2'); // Go to config screen
         }
 
         function saveConfig() {
-            gameState.adminSettings.passwordEnabled = document.getElementById('enable-password').checked;
-            gameState.adminSettings.autoFillEnabled = document.getElementById('enable-auto-fill').checked;
-            gameState.adminSettings.maxCardsPerPlayer = parseInt(document.getElementById('max-cards').value);
-            gameState.adminSettings.maxPlayers = parseInt(document.getElementById('max-players').value);
-
-            // Generate rules for player screen
-            gameState.rules = [
-                `Sala: ${gameState.roomName}`,
-                `Vencedor ${gameState.adminSettings.winnerContinues ? 'continua' : 'não continua'} na partida.`,
-                `Máximo de ${gameState.adminSettings.maxCardsPerPlayer} cartelas por jogador.`,
-                `Máximo de ${gameState.adminSettings.maxPlayers} participantes.`,
-                `Marcação de cartelas: ${gameState.adminSettings.autoFillEnabled ? 'Automática' : 'Manual'}.`
-            ];
-
-            gameState.gamePhase = 'waiting';
-            saveGameState();
-            updateAdminUI();
+            adminState.enableCardPassword = document.getElementById('enableCardPassword').checked;
+            adminState.enableAutoFill = document.getElementById('enableAutoFill').checked;
+            adminState.maxCardsPerPlayer = parseInt(document.getElementById('maxCardsPerPlayer').value) || 5;
+            adminState.maxParticipants = parseInt(document.getElementById('maxParticipants').value) || 50;
+            saveAdminState();
+            updateUI();
+            showScreen('screen3'); // Go to waiting screen
         }
 
-        function generateQRCode() {
-            const playerLink = `${window.location.origin}/player.html?room=${gameState.roomId}`;
-            document.getElementById('qr-code-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(playerLink)}`;
-            document.getElementById('share-link-display').textContent = playerLink;
+        function cancelBingo() {
+            if (confirm('Tem certeza que deseja encerrar o bingo? Todos os dados da sala serão perdidos.')) {
+                clearAdminState();
+                alert('Bingo encerrado.');
+            }
         }
 
         function copyShareLink() {
-            const shareLink = document.getElementById('share-link-display').textContent;
+            const shareLink = document.getElementById('shareLink').textContent;
             navigator.clipboard.writeText(shareLink).then(() => {
                 alert('Link copiado para a área de transferência!');
             }).catch(err => {
                 console.error('Erro ao copiar o link: ', err);
-                alert('Não foi possível copiar o link. Por favor, copie manualmente.');
+                alert('Erro ao copiar o link. Por favor, copie manualmente.');
             });
         }
 
-        function startBingo() {
-            if (Object.keys(gameState.players).length === 0) {
-                alert('Não há jogadores na sala para iniciar o bingo!');
-                return;
+        function startGame() {
+            if (Object.keys(adminState.players).length === 0) {
+                if (!confirm('Não há jogadores na sala. Deseja iniciar o bingo mesmo assim?')) {
+                    return;
+                }
             }
-            gameState.gamePhase = 'playing';
-            gameState.drawnBalls = [];
-            gameState.lastDrawnBall = null;
-            gameState.allBalls = Array.from({ length: 75 }, (_, i) => i + 1); // Reset all balls
-            saveGameState();
-            updateAdminUI();
+            adminState.gameStarted = true;
+            adminState.gameEnded = false;
+            saveAdminState();
+            updateUI();
+            showScreen('screen4');
+        }
+
+        function endGame() {
+            if (confirm('Tem certeza que deseja encerrar o jogo de bingo?')) {
+                adminState.gameEnded = true;
+                adminState.gameStarted = false; // Reset for next game
+                saveAdminState();
+                alert('Jogo de bingo encerrado!');
+                showScreen('screen1'); // Go back to create room
+                clearAdminState(); // Clear all data
+            }
         }
 
         function drawNextBall() {
-            if (gameState.drawnBalls.length >= 75) {
+            if (adminState.availableNumbers.length === 0) {
                 alert('Todas as bolas foram sorteadas! O jogo acabou.');
-                endBingo();
+                endGame();
                 return;
             }
 
-            const availableBalls = gameState.allBalls.filter(ball => !gameState.drawnBalls.includes(ball));
-            if (availableBalls.length === 0) {
-                alert('Não há mais bolas para sortear!');
-                endBingo();
-                return;
-            }
-
-            const randomIndex = Math.floor(Math.random() * availableBalls.length);
-            const drawnBall = availableBalls[randomIndex];
-
-            gameState.drawnBalls.push(drawnBall);
-            gameState.lastDrawnBall = drawnBall;
-            saveGameState(); // Save immediately after drawing
-
-            // Animate globe
-            const globe = document.getElementById('bingo-globe');
-            const globeNumber = document.getElementById('globe-number');
+            const globe = document.getElementById('bingoGlobe');
             globe.classList.add('spinning');
-            globeNumber.textContent = ''; // Clear number during spin
+            document.getElementById('nextBallBtn').disabled = true;
 
             setTimeout(() => {
                 globe.classList.remove('spinning');
-                globeNumber.textContent = drawnBall;
-                updateAdminUI(); // Update UI after animation
-            }, 1000); // Spin for 1 second
+                document.getElementById('nextBallBtn').disabled = false;
+
+                const randomIndex = Math.floor(Math.random() * adminState.availableNumbers.length);
+                const drawnNumber = adminState.availableNumbers.splice(randomIndex, 1)[0];
+                adminState.drawnNumbers.push(drawnNumber);
+                document.getElementById('currentBall').textContent = drawnNumber;
+                saveAdminState();
+                updateDrawnNumbersGrid();
+            }, 1500); // Simulate spinning for 1.5 seconds
         }
 
-        function handleBingoCall() {
-            if (gameState.bingoCall) {
-                const player = gameState.players[gameState.bingoCall.playerId];
-                if (player) {
-                    document.getElementById('bingo-player-name').textContent = player.name;
-                    document.getElementById('bingo-card-id').textContent = gameState.bingoCall.cardId;
-                    document.getElementById('bingo-type').textContent = gameState.bingoCall.bingoType;
-                    openModal('bingo-validation-modal');
-                } else {
-                    console.error("Player not found for bingo call:", gameState.bingoCall.playerId);
-                    gameState.bingoCall = null; // Clear invalid call
-                    saveGameState();
+        function updateDrawnNumbersGrid() {
+            const grid = document.getElementById('drawnNumbersGrid');
+            grid.innerHTML = '';
+            adminState.drawnNumbers.forEach((num, index) => {
+                const item = document.createElement('div');
+                item.classList.add('drawn-number-item');
+                if (index === adminState.drawnNumbers.length - 1) {
+                    item.classList.add('last-drawn');
                 }
+                item.textContent = num;
+                grid.appendChild(item);
+            });
+            grid.scrollTop = grid.scrollHeight; // Scroll to bottom
+        }
+
+        // --- Modal de Validação de Bingo ---
+        function showBingoValidationModal(bingoCall) {
+            const modal = document.getElementById('bingoValidationModal');
+            const player = adminState.players[bingoCall.playerId];
+            if (!player) {
+                console.error("Player not found for bingo call:", bingoCall);
+                return;
             }
+            document.getElementById('bingoCallerName').textContent = player.name + ' ' + player.surname;
+            document.getElementById('bingoCardId').textContent = bingoCall.cardId;
+            document.getElementById('bingoType').textContent = bingoCall.type;
+            modal.classList.add('active');
+            modal.style.display = 'flex';
+        }
+
+        function hideBingoValidationModal() {
+            const modal = document.getElementById('bingoValidationModal');
+            modal.classList.remove('active');
+            modal.style.display = 'none';
         }
 
         function validateBingo(isValid) {
-            if (!gameState.bingoCall) return;
+            const pendingBingoCall = adminState.bingoCalls.find(call => call.validated === null);
+            if (pendingBingoCall) {
+                pendingBingoCall.validated = isValid;
+                if (isValid) {
+                    alert(`BINGO do jogador ${adminState.players[pendingBingoCall.playerId].name} validado!`);
+                    // Logic for winner continues or not
+                    if (!adminState.winnerContinues) {
+                        adminState.players[pendingBingoCall.playerId].status = 'won'; // Mark player as won
+                    }
+                    // Check for other pending bingos at the same time (tie)
+                    const simultaneousBingos = adminState.bingoCalls.filter(
+                        call => call.validated === null && call.timestamp === pendingBingoCall.timestamp
+                    );
 
-            const { playerId, cardId, bingoType } = gameState.bingoCall;
-            const player = gameState.players[playerId];
-            const card = player.cards.find(c => c.id === cardId);
-
-            if (isValid) {
-                // Check for tie
-                const potentialWinners = Object.values(gameState.players).filter(p =>
-                    p.status === 'bingo_called' && p.bingoType === bingoType && p.bingoCallTimestamp === gameState.bingoCall.timestamp
-                );
-
-                if (potentialWinners.length > 1) {
-                    // Tie-breaker needed
-                    gameState.gamePhase = 'tie_breaker';
-                    gameState.tieBreaker = {
-                        players: potentialWinners.map(p => p.id),
-                        rolls: {},
-                        winnerId: null
-                    };
-                    saveGameState();
-                    closeModal('bingo-validation-modal');
-                    updateAdminUI(); // Will open tie-breaker modal
+                    if (simultaneousBingos.length > 0) {
+                        // Start tie-breaker
+                        adminState.currentTieBreaker = {
+                            players: [pendingBingoCall, ...simultaneousBingos].map(call => ({
+                                playerId: call.playerId,
+                                name: adminState.players[call.playerId].name + ' ' + adminState.players[call.playerId].surname,
+                                cardId: call.cardId,
+                                result: null
+                            })),
+                            results: {}
+                        };
+                        showTieBreakerModal(adminState.currentTieBreaker);
+                    } else {
+                        // No tie, just one winner
+                        hideBingoValidationModal();
+                    }
                 } else {
-                    // Single winner
-                    gameState.winner = { playerId, name: player.name, bingoType };
-                    player.status = 'winner';
-                    player.bingoType = bingoType;
-                    card.isBingo = true;
-                    alert(`${player.name} venceu com ${bingoType}!`);
-
-                    if (!gameState.adminSettings.winnerContinues) {
-                        player.status = 'eliminated'; // Player is removed from future rounds
-                    }
-                    gameState.gamePhase = 'playing'; // Continue game for other prizes
-                    gameState.bingoCall = null; // Clear bingo call
-                    saveGameState();
-                    closeModal('bingo-validation-modal');
-                    updateAdminUI();
+                    alert(`BINGO do jogador ${adminState.players[pendingBingoCall.playerId].name} invalidado.`);
+                    // Player can continue playing or call bingo again
+                    hideBingoValidationModal();
                 }
-            } else {
-                // Invalid bingo
-                player.status = 'active'; // Reset player status
-                alert(`${player.name}'s BINGO foi invalidado.`);
-                gameState.bingoCall = null;
-                gameState.gamePhase = 'playing'; // Continue game
-                saveGameState();
-                closeModal('bingo-validation-modal');
-                updateAdminUI();
+                saveAdminState();
             }
         }
 
-        function handleTieBreaker() {
-            if (!gameState.tieBreaker) return;
+        // --- Modal de Desempate ---
+        function showTieBreakerModal(tieBreakerData) {
+            const modal = document.getElementById('tieBreakerModal');
+            const playersContainer = document.getElementById('roulettePlayers');
+            playersContainer.innerHTML = '';
+            document.getElementById('rouletteResult').textContent = '?';
+            document.getElementById('rouletteWinner').textContent = '';
 
-            const tieBreakerModal = document.getElementById('tie-breaker-modal');
-            const playerRollButtonsDiv = document.getElementById('player-roll-buttons');
-            const tieBreakerMessage = document.getElementById('tie-breaker-message');
-            const confirmTieWinnerBtn = document.getElementById('confirm-tie-winner-btn');
-
-            playerRollButtonsDiv.innerHTML = '';
-            tieBreakerMessage.textContent = 'Clique para sortear seu número:';
-            confirmTieWinnerBtn.style.display = 'none';
-
-            gameState.tieBreaker.players.forEach(playerId => {
-                const player = gameState.players[playerId];
-                if (player) {
-                    const button = document.createElement('button');
-                    button.className = 'btn btn-warning';
-                    button.textContent = `Sortear (${player.name})`;
-                    button.onclick = () => rollTieBreaker(playerId);
-                    button.disabled = !!gameState.tieBreaker.rolls[playerId];
-                    playerRollButtonsDiv.appendChild(button);
-                }
+            tieBreakerData.players.forEach(player => {
+                const playerDiv = document.createElement('div');
+                playerDiv.classList.add('roulette-player-item');
+                playerDiv.innerHTML = `
+                    <span>${player.name}</span>
+                    <button class="btn" onclick="spinRoulette('${player.playerId}')" ${player.result !== null ? 'disabled' : ''}>
+                        Sortear (${player.result !== null ? player.result : '?'})
+                    </button>
+                `;
+                playersContainer.appendChild(playerDiv);
             });
+            modal.classList.add('active');
+            modal.style.display = 'flex';
+        }
 
-            // Check if all players have rolled
-            const allRolled = gameState.tieBreaker.players.every(pId => gameState.tieBreaker.rolls[pId] !== undefined);
-            if (allRolled) {
-                let maxRoll = -1;
-                let winnerId = null;
-                for (const pId in gameState.tieBreaker.rolls) {
-                    if (gameState.tieBreaker.rolls[pId] > maxRoll) {
-                        maxRoll = gameState.tieBreaker.rolls[pId];
-                        winnerId = pId;
+        function hideTieBreakerModal() {
+            const modal = document.getElementById('tieBreakerModal');
+            modal.classList.remove('active');
+            modal.style.display = 'none';
+            adminState.currentTieBreaker = null;
+            saveAdminState();
+        }
+
+        function spinRoulette(playerId) {
+            if (!adminState.currentTieBreaker) return;
+
+            const playerIndex = adminState.currentTieBreaker.players.findIndex(p => p.playerId === playerId);
+            if (playerIndex === -1 || adminState.currentTieBreaker.players[playerIndex].result !== null) return;
+
+            const result = Math.floor(Math.random() * 75) + 1;
+            adminState.currentTieBreaker.players[playerIndex].result = result;
+            adminState.currentTieBreaker.results[playerId] = result;
+
+            // Update UI for the specific player button
+            const playerDiv = document.querySelector(`#roulettePlayers .roulette-player-item:nth-child(${playerIndex + 1})`);
+            if (playerDiv) {
+                const button = playerDiv.querySelector('button');
+                button.textContent = `Sortear (${result})`;
+                button.disabled = true;
+            }
+
+            document.getElementById('rouletteResult').textContent = result;
+            document.getElementById('rouletteWheel').style.transform = `rotate(${result * 360 / 75 + 720}deg)`; // Spin effect
+
+            saveAdminState();
+            checkTieBreakerWinner();
+        }
+
+        function checkTieBreakerWinner() {
+            if (!adminState.currentTieBreaker) return;
+
+            const allSpun = adminState.currentTieBreaker.players.every(p => p.result !== null);
+            if (allSpun) {
+                let winner = null;
+                let maxResult = -1;
+
+                adminState.currentTieBreaker.players.forEach(p => {
+                    if (p.result > maxResult) {
+                        maxResult = p.result;
+                        winner = p;
                     }
-                }
-                gameState.tieBreaker.winnerId = winnerId;
-                tieBreakerMessage.textContent = `Todos sortearam! O vencedor é ${gameState.players[winnerId].name} com o número ${maxRoll}!`;
-                confirmTieWinnerBtn.style.display = 'block';
-            }
+                });
 
-            openModal('tie-breaker-modal');
-        }
-
-        function rollTieBreaker(playerId) {
-            const rouletteContainer = document.getElementById('roulette-container');
-            const rouletteNumberSpan = document.getElementById('roulette-number');
-            rouletteContainer.classList.add('spinning');
-            rouletteNumberSpan.textContent = '';
-
-            setTimeout(() => {
-                const roll = Math.floor(Math.random() * 75) + 1; // 1 to 75
-                gameState.tieBreaker.rolls[playerId] = roll;
-                rouletteNumberSpan.textContent = roll;
-                rouletteContainer.classList.remove('spinning');
-                saveGameState();
-                updateAdminUI(); // Re-render tie-breaker modal
-            }, 1000);
-        }
-
-        function confirmTieWinner() {
-            if (!gameState.tieBreaker || !gameState.tieBreaker.winnerId) return;
-
-            const winnerId = gameState.tieBreaker.winnerId;
-            const winnerPlayer = gameState.players[winnerId];
-
-            gameState.winner = { playerId: winnerId, name: winnerPlayer.name, bingoType: gameState.bingoCall.bingoType };
-            winnerPlayer.status = 'winner';
-            winnerPlayer.bingoType = gameState.bingoCall.bingoType;
-
-            // Mark the winning card as bingo
-            const winningCard = winnerPlayer.cards.find(c => c.id === gameState.bingoCall.cardId);
-            if (winningCard) winningCard.isBingo = true;
-
-            alert(`${winnerPlayer.name} venceu o desempate com o número ${gameState.tieBreaker.rolls[winnerId]}!`);
-
-            if (!gameState.adminSettings.winnerContinues) {
-                winnerPlayer.status = 'eliminated';
-            }
-
-            gameState.gamePhase = 'playing';
-            gameState.bingoCall = null;
-            gameState.tieBreaker = null;
-            saveGameState();
-            closeModal('tie-breaker-modal');
-            updateAdminUI();
-        }
-
-        function endBingo() {
-            if (confirm('Tem certeza que deseja encerrar o bingo? Todos os dados da sala serão perdidos.')) {
-                gameState.gamePhase = 'ended';
-                saveGameState();
-                alert('Bingo encerrado!');
-                resetGameState(); // Clear all data
-                updateAdminUI();
-            }
-        }
-
-        function cancelBingo() {
-            if (confirm('Tem certeza que deseja cancelar o bingo? Todos os dados da sala serão perdidos.')) {
-                gameState.gamePhase = 'ended'; // Mark as ended to trigger reset
-                saveGameState();
-                alert('Bingo cancelado!');
-                resetGameState(); // Clear all data
-                updateAdminUI();
-            }
-        }
-
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'flex';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        // Periodic update from localStorage
-        setInterval(() => {
-            const storedState = localStorage.getItem(GAME_STATE_KEY);
-            if (storedState) {
-                const newState = JSON.parse(storedState);
-                // Only update if there's a change relevant to admin or a bingo call
-                if (JSON.stringify(newState) !== JSON.stringify(gameState)) {
-                    gameState = newState;
-                    updateAdminUI();
+                if (winner) {
+                    document.getElementById('rouletteWinner').textContent = `Vencedor do desempate: ${winner.name} com o número ${winner.result}!`;
+                    // Mark the winner as 'won' and others as 'lost-tie'
+                    adminState.players[winner.playerId].status = 'won';
+                    adminState.currentTieBreaker.players.forEach(p => {
+                        if (p.playerId !== winner.playerId) {
+                            adminState.players[p.playerId].status = 'lost-tie'; // Exclude from future prizes
+                        }
+                    });
+                    // Clear the original bingo calls related to this tie
+                    adminState.bingoCalls = adminState.bingoCalls.filter(call =>
+                        !adminState.currentTieBreaker.players.some(p => p.playerId === call.playerId && call.validated === null)
+                    );
+                    saveAdminState();
                 }
             }
-        }, 2000); // Every 2 seconds
+        }
 
-        // Initial load
-        window.onload = () => {
-            loadGameState();
-        };
+        // --- Inicialização ---
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!loadAdminState()) {
+                showScreen('screen1');
+            } else {
+                updateUI();
+            }
+
+            // Polling para atualizar o estado e verificar chamadas de bingo
+            setInterval(() => {
+                const currentRoomCode = localStorage.getItem('bingo_admin_current_room');
+                if (currentRoomCode && adminState.roomCode === JSON.parse(currentRoomCode)) {
+                    const storedState = localStorage.getItem(`bingo_admin_${adminState.roomCode}`);
+                    if (storedState) {
+                        const parsedState = JSON.parse(storedState);
+                        // Only update if there's a newer state or a pending bingo call
+                        if (parsedState.lastUpdate > adminState.lastUpdate || parsedState.bingoCalls.some(call => call.validated === null)) {
+                            adminState = parsedState;
+                            updateUI();
+                        }
+                    }
+                } else {
+                    // Room code changed or no room, reset admin state
+                    clearAdminState();
+                }
+            }, 2000); // A cada 2 segundos
+        });
     </script>
 </body>
 </html>

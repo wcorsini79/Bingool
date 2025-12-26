@@ -3,151 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>binngo MAKER - Jogador</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Bingo Digital - Jogador</title>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #8bc34a, #ffeb3b, #ff9800, #e91e63);
-            background-size: 400% 400%;
-            animation: gradientAnimation 15s ease infinite;
+            background: linear-gradient(135deg, #f093fb, #f5576c); /* Gradiente rosa/roxo */
             color: #fff;
-            text-align: center;
-            padding-bottom: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
         }
-
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .header {
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            margin-bottom: 20px;
-        }
-
-        .header h1 {
-            font-family: 'Press Start 2P', cursive;
-            color: #ffeb3b;
-            font-size: 2em;
-            margin: 0;
-            text-shadow: 3px 3px #e91e63;
-            letter-spacing: 1px;
-        }
-
         .container {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            max-width: 800px;
-            width: 90%;
-            margin-top: 20px;
-            animation: fadeIn 1s ease-out;
-            text-align: left;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            position: relative;
         }
-
+        h1, h2 {
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+        .screen.active {
+            display: block;
+        }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        h2 {
-            color: #ffeb3b;
-            font-size: 1.8em;
+        .form-group {
             margin-bottom: 20px;
-            text-align: center;
+            text-align: left;
         }
-
-        label {
+        .form-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: bold;
-            color: #fff;
+            color: #eee;
         }
-
-        input[type="text"],
-        input[type="password"] {
+        .form-group input[type="text"] {
             width: calc(100% - 20px);
             padding: 12px;
-            margin-bottom: 20px;
-            border: none;
+            border: 1px solid #ccc;
             border-radius: 8px;
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #333;
             font-size: 1em;
+            box-sizing: border-box;
+            background: rgba(255,255,255,0.9);
+            color: #333;
         }
-
-        .button-group {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
         .btn {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #333;
+            border: none;
             padding: 12px 25px;
+            border-radius: 8px;
             font-size: 1.1em;
             font-weight: bold;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            margin: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
         .btn-primary {
-            background-color: #4CAF50; /* Verde */
-            box-shadow: 0 5px #388E3C;
+            background: linear-gradient(45deg, #f5576c, #f093fb);
+            color: #fff;
         }
-        .btn-primary:hover { background-color: #66BB6A; transform: translateY(-2px); box-shadow: 0 7px #388E3C; }
-
-        .btn-danger {
-            background-color: #F44336; /* Vermelho */
-            box-shadow: 0 5px #D32F2F;
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
         }
-        .btn-danger:hover { background-color: #EF5350; transform: translateY(-2px); box-shadow: 0 7px #D32F2F; }
-
-        .btn-warning {
-            background-color: #FFC107; /* Amarelo */
-            color: #333;
-            box-shadow: 0 5px #FFA000;
+        .btn-success {
+            background: linear-gradient(45deg, #28a745, #218838);
+            color: #fff;
         }
-        .btn-warning:hover { background-color: #FFD54F; transform: translateY(-2px); box-shadow: 0 7px #FFA000; }
-
-        .screen {
-            display: none; /* Esconde todas as telas por padrão */
+        .btn-success:hover {
+            background: linear-gradient(45deg, #218838, #28a745);
         }
-
-        #player-waiting-screen ul {
+        .message {
+            font-size: 1.5em;
+            margin-top: 30px;
+            color: #eee;
+        }
+        .rules-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+            color: #eee;
+        }
+        .rules-section h3 {
+            color: #fff;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .rules-section ul {
             list-style: none;
             padding: 0;
-            margin-top: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 15px;
         }
-
-        #player-waiting-screen ul li {
+        .rules-section ul li {
             margin-bottom: 8px;
-            font-size: 1.1em;
+            padding-left: 25px;
+            position: relative;
+        }
+        .rules-section ul li::before {
+            content: '•';
+            color: #FFD700;
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+            top: -2px;
         }
 
-        #player-game-screen .game-info {
+        /* Game Screen */
+        .game-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -155,54 +144,44 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-
-        #player-game-screen .game-info p {
+        .game-header h2 {
             margin: 0;
-            font-size: 1.1em;
+            font-size: 1.8em;
         }
-
-        #player-game-screen .last-drawn-ball-player {
-            font-size: 3em;
+        .last-drawn-ball {
+            background: #FFD700;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 1.5em;
             font-weight: bold;
-            color: #ffeb3b;
-            text-shadow: 3px 3px #e91e63;
-            margin: 10px auto;
-            display: block;
-            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-
-        #player-game-screen .cards-container {
+        .cards-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-top: 20px;
         }
-
         .bingo-card {
-            background-color: #fefefe;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             padding: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             color: #333;
             text-align: center;
             position: relative;
-            overflow: hidden;
         }
-
         .bingo-card h3 {
             margin-top: 0;
-            color: #e91e63;
-            font-size: 1.2em;
             margin-bottom: 10px;
+            color: #f5576c;
         }
-
         .bingo-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 5px;
-            margin-top: 10px;
         }
-
         .bingo-cell {
             width: 100%;
             padding-top: 100%; /* Makes cells square */
@@ -210,95 +189,110 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #eee;
+            background: #eee;
             border-radius: 5px;
             font-weight: bold;
             font-size: 1.1em;
             cursor: pointer;
             transition: background-color 0.2s ease;
         }
-
         .bingo-cell span {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
-
-        .bingo-cell.header-cell {
-            background-color: #ffeb3b;
+        .bingo-cell.header {
+            background: #f093fb;
+            color: #fff;
+            font-size: 1.2em;
+        }
+        .bingo-cell.free {
+            background: #FFD700;
             color: #333;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.9em;
         }
-
-        .bingo-cell.free-space {
-            background-color: #ff9800;
-            color: #fff;
-        }
-
         .bingo-cell.marked {
-            background-color: #8bc34a;
+            background: #28a745;
             color: #fff;
         }
-
-        .bingo-card.bingo-winner {
-            border: 5px solid #ffeb3b;
-            box-shadow: 0 0 20px #ffeb3b;
-            animation: pulse 1.5s infinite alternate;
-        }
-
-        @keyframes pulse {
-            from { transform: scale(1); box-shadow: 0 0 20px #ffeb3b; }
-            to { transform: scale(1.02); box-shadow: 0 0 30px #ffeb3b, 0 0 40px #ffeb3b; }
-        }
-
-        .bingo-card .bingo-overlay {
+        .bingo-cell.marked::after {
+            content: '✓';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(233, 30, 99, 0.8); /* Rosa */
-            color: #fff;
-            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5em;
+            color: rgba(255,255,255,0.5);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .bingo-card.winner {
+            border: 5px solid #FFD700;
+            box-shadow: 0 0 20px #FFD700;
+            animation: pulse 1s infinite alternate;
+        }
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.02); }
+        }
+        .bingo-card .bingo-status {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             font-size: 3em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 10px;
+            font-weight: bold;
+            color: #28a745;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            z-index: 10;
             opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
+            animation: bingoPop 1s forwards;
+        }
+        @keyframes bingoPop {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            70% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         }
 
-        .bingo-card.bingo-winner .bingo-overlay {
-            opacity: 1;
-        }
-
-        .drawn-balls-history-player {
-            margin-top: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 10px;
+        .drawn-numbers {
+            margin-top: 30px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            max-height: 100px;
-            overflow-y: auto;
+            text-align: left;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #eee;
+        }
+        .drawn-numbers h3 {
+            color: #fff;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .drawn-numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+            gap: 8px;
+        }
+        .drawn-number-item {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 5px;
+            padding: 8px 0;
+            font-weight: bold;
+            font-size: 0.9em;
+            color: #fff;
             text-align: center;
         }
-
-        .drawn-balls-history-player span {
-            display: inline-block;
-            background-color: #2196F3;
-            color: #fff;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            line-height: 30px;
-            margin: 3px;
-            font-size: 0.8em;
-            font-weight: bold;
+        .drawn-number-item.last-drawn {
+            background: #FFD700;
+            border-color: #FFA500;
+            color: #333;
+            animation: highlight 1s infinite alternate;
+        }
+        @keyframes highlight {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
         }
 
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -308,402 +302,391 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0,0,0,0.6);
             justify-content: center;
             align-items: center;
         }
-
         .modal-content {
             background-color: #fefefe;
             margin: auto;
             padding: 30px;
-            border-radius: 10px;
-            width: 80%;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             max-width: 500px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 90%;
             text-align: center;
+            animation: slideIn 0.4s ease-out;
             color: #333;
-            position: relative;
         }
-
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
         .modal-content h3 {
-            color: #e91e63;
+            color: #f5576c;
             margin-bottom: 20px;
-            font-size: 1.5em;
+            font-size: 1.8em;
         }
-
         .modal-content p {
-            margin-bottom: 15px;
             font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #555;
         }
-
-        .modal-content .button-group {
+        .modal-buttons {
             margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
         }
-
-        .close-button {
-            color: #aaa;
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 28px;
+        .modal-buttons .btn {
+            padding: 10px 20px;
+            font-size: 1em;
+        }
+        .winner-notification {
+            background: #28a745;
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 1.2em;
             font-weight: bold;
-            cursor: pointer;
+            animation: pulse 1s infinite alternate;
+        }
+        .game-over-message {
+            background: #f5576c;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            font-size: 1.8em;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
         }
 
-        .close-button:hover,
-        .close-button:focus {
-            color: #333;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .footer {
-            margin-top: 40px;
-            font-size: 0.9em;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
+        /* Responsividade */
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.5em;
-            }
-            h2 {
-                font-size: 1.4em;
-            }
             .container {
                 padding: 20px;
+            }
+            h1 {
+                font-size: 1.8em;
             }
             .btn {
                 padding: 10px 20px;
                 font-size: 1em;
             }
-            .bingo-card h3 {
-                font-size: 1em;
+            .game-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .last-drawn-ball {
+                margin-top: 10px;
+            }
+            .cards-container {
+                grid-template-columns: 1fr;
             }
             .bingo-cell {
                 font-size: 1em;
             }
-            .bingo-cell.header-cell {
-                font-size: 0.8em;
-            }
-            .bingo-card .bingo-overlay {
-                font-size: 2em;
+            .drawn-numbers-grid {
+                grid-template-columns: repeat(auto-fill, minmax(35px, 1fr));
+                gap: 5px;
             }
             .modal-content {
-                width: 95%;
                 padding: 20px;
             }
-        }
-
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 1.2em;
-            }
-            h2 {
-                font-size: 1.2em;
-            }
-            .container {
-                padding: 15px;
-            }
-            .btn {
-                font-size: 0.9em;
-                padding: 8px 15px;
-            }
-            .bingo-card h3 {
-                font-size: 0.9em;
-            }
-            .bingo-cell {
-                font-size: 0.9em;
-            }
-            .bingo-cell.header-cell {
-                font-size: 0.7em;
-            }
-            .bingo-card .bingo-overlay {
-                font-size: 1.5em;
-            }
             .modal-content h3 {
-                font-size: 1.2em;
-            }
-            .modal-content p {
-                font-size: 0.9em;
+                font-size: 1.5em;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>binngo MAKER</h1>
-    </div>
-
     <div class="container">
+        <h1>Bingo Digital - Jogador</h1>
+
         <!-- Screen 1: Cadastro do Jogador -->
-        <div id="player-registration-screen" class="screen">
-            <h2>Bem-vindo ao Bingo!</h2>
-            <p>Você está entrando na sala: <strong id="registration-room-name"></strong></p>
-            <label for="player-name">Seu Nome:</label>
-            <input type="text" id="player-name" placeholder="Nome" required>
-            <label for="player-surname">Seu Sobrenome:</label>
-            <input type="text" id="player-surname" placeholder="Sobrenome" required>
-            <div id="password-input-group" style="display: none;">
-                <label for="player-password">Senha da Cartela (opcional):</label>
-                <input type="password" id="player-password" placeholder="Senha">
+        <div id="screen1" class="screen active">
+            <h2>Entrar na Sala</h2>
+            <p>Sala: <strong id="playerRoomCodeDisplay"></strong></p>
+            <div class="form-group">
+                <label for="playerName">Nome:</label>
+                <input type="text" id="playerName" placeholder="Seu Nome" required>
             </div>
-            <div class="button-group">
-                <button class="btn btn-primary" onclick="registerPlayer()">Entrar na Sala</button>
+            <div class="form-group">
+                <label for="playerSurname">Sobrenome:</label>
+                <input type="text" id="playerSurname" placeholder="Seu Sobrenome" required>
             </div>
+            <button class="btn btn-primary" onclick="joinRoom()">Entrar na Sala</button>
         </div>
 
-        <!-- Screen 2: Espera do Jogo -->
-        <div id="player-waiting-screen" class="screen">
+        <!-- Screen 2: Espera -->
+        <div id="screen2" class="screen">
             <h2>Aguarde o início do jogo...</h2>
-            <p>Você está na sala: <strong id="waiting-room-name-player"></strong></p>
-            <p>Olá, <strong id="waiting-player-name"></strong>!</p>
-            <h3>Regras da Partida:</h3>
-            <ul id="game-rules-list">
-                <!-- Regras serão carregadas aqui -->
-            </ul>
+            <p class="message">Você está na sala: <strong id="waitingRoomName"></strong></p>
+            <div class="rules-section">
+                <h3>Regras da Partida:</h3>
+                <ul id="gameRulesList">
+                    <li>Vencedor continua: <span id="ruleWinnerContinues">Não</span></li>
+                    <li>Auto Preencher: <span id="ruleAutoFill">Sim</span></li>
+                    <li>Máx. Cartelas por Jogador: <span id="ruleMaxCards">5</span></li>
+                    <li>Máx. Participantes: <span id="ruleMaxPlayers">50</span></li>
+                </ul>
+            </div>
+            <p class="message">Aguardando o administrador iniciar o jogo.</p>
         </div>
 
-        <!-- Screen 3: Tela de Jogo -->
-        <div id="player-game-screen" class="screen">
-            <h2>Hora do Bingo!</h2>
-            <div class="game-info">
-                <p>Sala: <strong id="game-room-name"></strong></p>
-                <p>Jogador: <strong id="game-player-name"></strong></p>
-                <p>Última Bola: <span class="last-drawn-ball-player" id="last-drawn-ball-player">--</span></p>
+        <!-- Screen 3: Jogo -->
+        <div id="screen3" class="screen">
+            <div class="game-header">
+                <h2>Sala: <span id="gamePlayerRoomName"></span></h2>
+                <div class="last-drawn-ball">Última Bola: <span id="playerCurrentBall">--</span></div>
+            </div>
+            <button class="btn btn-success" onclick="callBingo()">Chamar BINGO!</button>
+            <button class="btn" onclick="generateNewCard()">Gerar Nova Cartela</button>
+            <div id="winnerNotification" class="winner-notification" style="display: none;"></div>
+            <div id="gameOverMessage" class="game-over-message" style="display: none;">O jogo acabou!</div>
+
+            <div class="cards-container" id="playerCardsContainer">
+                <!-- Cartelas de bingo serão geradas aqui -->
             </div>
 
-            <div class="button-group">
-                <button class="btn btn-warning" id="call-bingo-btn" onclick="callBingo()">CHAMAR BINGO!</button>
-            </div>
-
-            <h3>Suas Cartelas:</h3>
-            <div class="cards-container" id="player-cards-container">
-                <!-- Cartelas serão geradas aqui -->
-            </div>
-
-            <h3>Histórico de Bolas:</h3>
-            <div class="drawn-balls-history-player" id="drawn-balls-history-player">
-                <!-- Bolas sorteadas aparecerão aqui -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Confirmação de BINGO -->
-    <div id="player-bingo-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeModal('player-bingo-modal')">&times;</span>
-            <h3>Você chamou BINGO!</h3>
-            <p>Aguarde o administrador validar sua cartela.</p>
-            <p>Tipo de BINGO: <strong id="player-bingo-type"></strong> na cartela <strong id="player-bingo-card-id"></strong></p>
-            <div class="button-group">
-                <button class="btn btn-primary" onclick="closeModal('player-bingo-modal')">OK</button>
+            <div class="drawn-numbers">
+                <h3>Bolas Sorteadas:</h3>
+                <div class="drawn-numbers-grid" id="playerDrawnNumbersGrid">
+                    <!-- Números sorteados aparecerão aqui -->
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal de Vencedor -->
-    <div id="winner-notification-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeModal('winner-notification-modal')">&times;</span>
-            <h3>🎉 VENCEDOR! 🎉</h3>
-            <p><strong id="winner-name"></strong> venceu o BINGO com <strong id="winner-bingo-type"></strong>!</p>
-            <p id="winner-message"></p>
-            <div class="button-group">
-                <button class="btn btn-primary" onclick="closeModal('winner-notification-modal')">Entendi</button>
+        <!-- Modal de BINGO Chamado -->
+        <div id="bingoCalledModal" class="modal">
+            <div class="modal-content">
+                <h3>BINGO CHAMADO!</h3>
+                <p>Aguardando validação do administrador.</p>
+                <div class="modal-buttons">
+                    <button class="btn btn-primary" onclick="closeBingoCalledModal()">OK</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="footer">
-        <p>&copy; 2023 binngo MAKER. Todos os direitos reservados.</p>
+        <!-- Modal de Validação de BINGO -->
+        <div id="bingoValidationResultModal" class="modal">
+            <div class="modal-content">
+                <h3 id="bingoValidationTitle"></h3>
+                <p id="bingoValidationMessage"></p>
+                <div class="modal-buttons">
+                    <button class="btn btn-primary" onclick="closeBingoValidationResultModal()">OK</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        const GAME_STATE_KEY = 'bingoGameState';
-        const PLAYER_STATE_KEY = 'bingoPlayerState';
-        let gameState = {};
-        let playerState = {};
-        let currentScreen = '';
-        let roomIdFromUrl = '';
-
-        const screens = {
-            registration: document.getElementById('player-registration-screen'),
-            waiting: document.getElementById('player-waiting-screen'),
-            game: document.getElementById('player-game-screen')
+        // --- Variáveis Globais e Estado ---
+        let playerState = {
+            roomCode: null,
+            playerId: null,
+            name: '',
+            surname: '',
+            cards: [], // [{ id: 'card1', numbers: [[B1,B2...],[I1,I2...]], marked: [[true,false...]] }]
+            status: 'active', // 'active', 'won', 'lost-tie'
+            lastAdminUpdate: 0,
+            bingoCalled: false,
+            bingoValidated: null // null: pending, true: valid, false: invalid
         };
 
-        function showScreen(screenId) {
-            Object.values(screens).forEach(screen => screen.style.display = 'none');
-            if (screens[screenId]) {
-                screens[screenId].style.display = 'block';
-                currentScreen = screenId;
-            }
-        }
+        let adminState = {}; // Copia do estado do admin para leitura
 
-        function loadPlayerState() {
-            const storedPlayerState = sessionStorage.getItem(PLAYER_STATE_KEY);
-            if (storedPlayerState) {
-                playerState = JSON.parse(storedPlayerState);
-            } else {
-                playerState = {
-                    id: generatePlayerId(),
-                    name: '',
-                    surname: '',
-                    roomId: '',
-                    cards: [],
-                    status: 'unregistered' // unregistered, registered, bingo_called, winner, eliminated
-                };
-            }
-        }
+        const BINGO_LETTERS = ['B', 'I', 'N', 'G', 'O'];
+        const BINGO_RANGES = {
+            'B': [1, 15],
+            'I': [16, 30],
+            'N': [31, 45],
+            'G': [46, 60],
+            'O': [61, 75]
+        };
 
-        function savePlayerState() {
-            sessionStorage.setItem(PLAYER_STATE_KEY, JSON.stringify(playerState));
+        // --- Funções de Sincronização e Persistência ---
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\[').replace(/[\]]/, '\]');
+            const regex = new RegExp('[\?&]' + name + '=([^&#]*)');
+            const results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
         function generatePlayerId() {
             return 'player_' + Math.random().toString(36).substring(2, 11);
         }
 
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\[').replace(/[\]]/, '\]');
-            var regex = new RegExp('[\?&]' + name + '=([^&#]*)');
-            var results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        function savePlayerState() {
+            if (playerState.roomCode && playerState.playerId) {
+                sessionStorage.setItem(`bingo_player_${playerState.roomCode}_${playerState.playerId}`, JSON.stringify(playerState));
+            }
         }
 
-        function updatePlayerUI() {
-            // Check if room exists and player is part of it
-            if (!gameState.roomId || gameState.roomId !== playerState.roomId) {
-                // If player is registered for a different room or room doesn't exist, reset
-                if (playerState.status !== 'unregistered') {
-                    alert('A sala de bingo foi encerrada ou você foi desconectado.');
-                    sessionStorage.removeItem(PLAYER_STATE_KEY);
-                    window.location.href = 'index.html'; // Redirect to home
-                    return;
+        function loadPlayerState() {
+            const roomCode = getUrlParameter('room');
+            if (roomCode) {
+                playerState.roomCode = roomCode;
+                document.getElementById('playerRoomCodeDisplay').textContent = roomCode;
+
+                // Try to load existing player state for this room
+                for (let i = 0; i < sessionStorage.length; i++) {
+                    const key = sessionStorage.key(i);
+                    if (key.startsWith(`bingo_player_${roomCode}_`)) {
+                        playerState = JSON.parse(sessionStorage.getItem(key));
+                        return true;
+                    }
                 }
             }
+            return false;
+        }
 
-            // Update common elements
-            document.getElementById('registration-room-name').textContent = gameState.roomName || 'N/A';
-            document.getElementById('waiting-room-name-player').textContent = gameState.roomName || 'N/A';
-            document.getElementById('waiting-player-name').textContent = playerState.name || 'Jogador';
-            document.getElementById('game-room-name').textContent = gameState.roomName || 'N/A';
-            document.getElementById('game-player-name').textContent = playerState.name || 'Jogador';
-            document.getElementById('last-drawn-ball-player').textContent = gameState.lastDrawnBall || '--';
+        function updateAdminPlayers() {
+            if (!adminState.roomCode || !playerState.playerId) return;
 
-            // Update drawn balls history
-            const drawnBallsHistoryDiv = document.getElementById('drawn-balls-history-player');
-            drawnBallsHistoryDiv.innerHTML = gameState.drawnBalls.map(ball => `<span>${ball}</span>`).join('');
-            drawnBallsHistoryDiv.scrollTop = drawnBallsHistoryDiv.scrollHeight;
+            // Get the latest admin state to avoid overwriting
+            const adminData = localStorage.getItem(`bingo_admin_${adminState.roomCode}`);
+            if (adminData) {
+                let currentAdminState = JSON.parse(adminData);
+                currentAdminState.players[playerState.playerId] = {
+                    name: playerState.name,
+                    surname: playerState.surname,
+                    cards: playerState.cards.map(card => ({ id: card.id, marked: card.marked })), // Only send necessary card data
+                    status: playerState.status
+                };
+                currentAdminState.lastUpdate = Date.now();
+                localStorage.setItem(`bingo_admin_${adminState.roomCode}`, JSON.stringify(currentAdminState));
+            }
+        }
 
-            // Show appropriate screen based on player and game state
-            if (playerState.status === 'unregistered') {
-                showScreen('registration');
-                document.getElementById('password-input-group').style.display = gameState.adminSettings.passwordEnabled ? 'block' : 'none';
-            } else if (gameState.gamePhase === 'waiting' || gameState.gamePhase === 'config' || gameState.gamePhase === 'setup') {
-                showScreen('waiting');
-                const rulesList = document.getElementById('game-rules-list');
-                rulesList.innerHTML = gameState.rules.map(rule => `<li>${rule}</li>`).join('');
-            } else if (gameState.gamePhase === 'playing' || gameState.gamePhase === 'bingo_called' || gameState.gamePhase === 'tie_breaker') {
-                showScreen('game');
-                renderPlayerCards();
-                if (playerState.status === 'eliminated') {
-                    document.getElementById('call-bingo-btn').disabled = true;
-                    document.getElementById('call-bingo-btn').textContent = 'ELIMINADO';
+        function updateUI() {
+            // Update rules on waiting screen
+            document.getElementById('waitingRoomName').textContent = adminState.roomName || 'N/A';
+            document.getElementById('ruleWinnerContinues').textContent = adminState.winnerContinues ? 'Sim' : 'Não';
+            document.getElementById('ruleAutoFill').textContent = adminState.enableAutoFill ? 'Sim' : 'Não';
+            document.getElementById('ruleMaxCards').textContent = adminState.maxCardsPerPlayer;
+            document.getElementById('ruleMaxPlayers').textContent = adminState.maxParticipants;
+
+            // Update game screen header
+            document.getElementById('gamePlayerRoomName').textContent = adminState.roomName || 'N/A';
+            document.getElementById('playerCurrentBall').textContent = adminState.drawnNumbers.length > 0 ? adminState.drawnNumbers[adminState.drawnNumbers.length - 1] : '--';
+            updatePlayerDrawnNumbersGrid();
+
+            // Render cards
+            renderPlayerCards();
+
+            // Handle game state changes
+            if (adminState.gameEnded) {
+                showScreen('screen3'); // Stay on game screen
+                document.getElementById('gameOverMessage').style.display = 'block';
+                document.getElementById('winnerNotification').style.display = 'none';
+                document.querySelector('.btn-success').style.display = 'none'; // Hide call bingo button
+                document.querySelector('.btn[onclick="generateNewCard()"]').style.display = 'none'; // Hide generate card button
+                return;
+            } else {
+                document.getElementById('gameOverMessage').style.display = 'none';
+                document.querySelector('.btn-success').style.display = 'inline-block';
+                document.querySelector('.btn[onclick="generateNewCard()"]').style.display = 'inline-block';
+            }
+
+            if (adminState.gameStarted && playerState.status === 'active') {
+                showScreen('screen3');
+                // Auto-fill logic
+                if (adminState.enableAutoFill) {
+                    autoMarkNumbers();
+                }
+            } else if (adminState.gameStarted && playerState.status !== 'active') {
+                showScreen('screen3'); // Stay on game screen, but disable actions
+                document.querySelector('.btn-success').disabled = true;
+                document.querySelector('.btn[onclick="generateNewCard()"]').disabled = true;
+                if (playerState.status === 'won') {
+                    document.getElementById('winnerNotification').textContent = `Parabéns, você ganhou BINGO!`;
+                    document.getElementById('winnerNotification').style.display = 'block';
+                } else if (playerState.status === 'lost-tie') {
+                    document.getElementById('winnerNotification').textContent = `Você participou do desempate, mas não venceu esta rodada.`;
+                    document.getElementById('winnerNotification').style.display = 'block';
+                }
+            } else if (!adminState.gameStarted && playerState.roomCode) {
+                showScreen('screen2');
+            } else {
+                showScreen('screen1');
+            }
+
+            // Check for bingo validation results
+            const playerBingoCall = adminState.bingoCalls.find(
+                call => call.playerId === playerState.playerId && call.validated !== null && call.validated !== playerState.bingoValidated
+            );
+            if (playerBingoCall) {
+                playerState.bingoValidated = playerBingoCall.validated;
+                if (playerBingoCall.validated) {
+                    showBingoValidationResultModal('BINGO VALIDADO!', 'Parabéns! Seu BINGO foi validado pelo administrador.');
+                    playerState.status = 'won';
                 } else {
-                    document.getElementById('call-bingo-btn').disabled = false;
-                    document.getElementById('call-bingo-btn').textContent = 'CHAMAR BINGO!';
+                    showBingoValidationResultModal('BINGO INVALIDADO!', 'Seu BINGO não foi validado. Verifique sua cartela e tente novamente.');
+                    playerState.bingoCalled = false; // Allow calling bingo again
                 }
-            } else if (gameState.gamePhase === 'ended') {
-                alert('O bingo foi encerrado pelo administrador.');
-                sessionStorage.removeItem(PLAYER_STATE_KEY);
-                window.location.href = 'index.html';
+                savePlayerState();
             }
 
-            // Handle winner notification
-            if (gameState.winner && gameState.winner.playerId !== playerState.id && playerState.status !== 'winner') {
-                document.getElementById('winner-name').textContent = gameState.winner.name;
-                document.getElementById('winner-bingo-type').textContent = gameState.winner.bingoType;
-                document.getElementById('winner-message').textContent = gameState.adminSettings.winnerContinues ? 'O jogo continua para os outros prêmios!' : 'O jogo continua para os outros prêmios, mas o vencedor não participa mais.';
-                openModal('winner-notification-modal');
-                gameState.winner = null; // Clear winner after showing to player
-                saveGameState();
+            // Hide bingo called modal if admin has processed it
+            const pendingCallForPlayer = adminState.bingoCalls.find(
+                call => call.playerId === playerState.playerId && call.validated === null
+            );
+            if (!pendingCallForPlayer && document.getElementById('bingoCalledModal').classList.contains('active')) {
+                closeBingoCalledModal();
             }
         }
 
-        function registerPlayer() {
-            const name = document.getElementById('player-name').value.trim();
-            const surname = document.getElementById('player-surname').value.trim();
-            const password = document.getElementById('player-password').value.trim();
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
 
+        // --- Funções de Jogo ---
+        function joinRoom() {
+            const name = document.getElementById('playerName').value.trim();
+            const surname = document.getElementById('playerSurname').value.trim();
             if (!name || !surname) {
-                alert('Por favor, preencha seu nome e sobrenome.');
-                return;
-            }
-
-            if (gameState.adminSettings.passwordEnabled && !password) {
-                alert('A sala requer uma senha para as cartelas. Por favor, insira uma.');
-                return;
-            }
-
-            if (Object.keys(gameState.players).length >= gameState.adminSettings.maxPlayers) {
-                alert('A sala atingiu o número máximo de participantes.');
+                alert('Por favor, insira seu nome e sobrenome.');
                 return;
             }
 
             playerState.name = name;
             playerState.surname = surname;
-            playerState.roomId = roomIdFromUrl;
-            playerState.status = 'registered';
-            playerState.password = password; // Store password if enabled
-
-            // Generate cards for the player
-            playerState.cards = [];
-            for (let i = 0; i < gameState.adminSettings.maxCardsPerPlayer; i++) {
-                playerState.cards.push(generateBingoCard(playerState.id, i + 1));
+            if (!playerState.playerId) {
+                playerState.playerId = generatePlayerId();
             }
-
-            // Add player to global game state (admin's view)
-            gameState.players[playerState.id] = {
-                id: playerState.id,
-                name: `${playerState.name} ${playerState.surname}`,
-                cards: playerState.cards.map(card => ({
-                    id: card.id,
-                    numbers: card.numbers,
-                    marked: card.marked,
-                    isBingo: false
-                })),
-                status: 'active',
-                bingoType: null,
-                bingoCallTimestamp: null
-            };
-
+            playerState.status = 'active';
             savePlayerState();
-            saveGameState(); // Update admin's view
-            updatePlayerUI();
+            updateAdminPlayers(); // Notify admin about new player
+            generateNewCard(); // Generate initial card
+            updateUI();
         }
 
-        function generateBingoCard(playerId, cardIndex) {
+        function generateNewCard() {
+            if (playerState.status !== 'active') {
+                alert('Você não pode gerar novas cartelas no momento.');
+                return;
+            }
+            if (playerState.cards.length >= adminState.maxCardsPerPlayer) {
+                alert(`Você atingiu o limite de ${adminState.maxCardsPerPlayer} cartelas por jogador.`);
+                return;
+            }
+
             const card = {
-                id: `${playerId}-card-${cardIndex}`,
+                id: `card_${playerState.cards.length + 1}_${Date.now()}`,
                 numbers: [],
-                marked: Array(5).fill(0).map(() => Array(5).fill(false)),
-                isBingo: false
+                marked: Array(5).fill(0).map(() => Array(5).fill(false))
             };
 
-            const ranges = {
-                B: [1, 15],
-                I: [16, 30],
-                N: [31, 45],
-                G: [46, 60],
-                O: [61, 75]
-            };
-            const letters = ['B', 'I', 'N', 'G', 'O'];
-
+            // Generate numbers for the card
             for (let col = 0; col < 5; col++) {
-                const [min, max] = ranges[letters[col]];
+                const letter = BINGO_LETTERS[col];
+                const [min, max] = BINGO_RANGES[letter];
                 const columnNumbers = [];
                 while (columnNumbers.length < 5) {
                     const num = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -711,218 +694,275 @@
                         columnNumbers.push(num);
                     }
                 }
-                card.numbers.push(columnNumbers.sort((a, b) => a - b));
+                card.numbers.push(columnNumbers);
             }
+            card.numbers[2][2] = 'FREE'; // Free space
+            card.marked[2][2] = true; // Free space is always marked
 
-            // Free space in the center (N3)
-            card.numbers[2][2] = 'FREE';
-            card.marked[2][2] = true;
-
-            return card;
-        }
-
-        function renderPlayerCards() {
-            const cardsContainer = document.getElementById('player-cards-container');
-            cardsContainer.innerHTML = '';
-
-            playerState.cards.forEach(card => {
-                const cardDiv = document.createElement('div');
-                cardDiv.className = `bingo-card ${card.isBingo ? 'bingo-winner' : ''}`;
-                cardDiv.id = `card-${card.id}`;
-
-                cardDiv.innerHTML = `
-                    <h3>Cartela ${card.id.split('-').pop()}</h3>
-                    <div class="bingo-grid">
-                        <div class="bingo-cell header-cell"><span>B</span></div>
-                        <div class="bingo-cell header-cell"><span>I</span></div>
-                        <div class="bingo-cell header-cell"><span>N</span></div>
-                        <div class="bingo-cell header-cell"><span>G</span></div>
-                        <div class="bingo-cell header-cell"><span>O</span></div>
-                    </div>
-                    <div class="bingo-grid" id="grid-${card.id}"></div>
-                    ${card.isBingo ? '<div class="bingo-overlay">BINGO!</div>' : ''}
-                `;
-                cardsContainer.appendChild(cardDiv);
-
-                const gridDiv = document.getElementById(`grid-${card.id}`);
-                for (let row = 0; row < 5; row++) {
-                    for (let col = 0; col < 5; col++) {
-                        const cellValue = card.numbers[col][row];
-                        const cellDiv = document.createElement('div');
-                        cellDiv.className = `bingo-cell ${card.marked[row][col] ? 'marked' : ''} ${cellValue === 'FREE' ? 'free-space' : ''}`;
-                        cellDiv.dataset.cardId = card.id;
-                        cellDiv.dataset.row = row;
-                        cellDiv.dataset.col = col;
-                        cellDiv.innerHTML = `<span>${cellValue}</span>`;
-
-                        if (cellValue !== 'FREE' && !gameState.adminSettings.autoFillEnabled && playerState.status === 'active') {
-                            cellDiv.onclick = () => toggleMark(card.id, row, col);
-                        }
-                        gridDiv.appendChild(cellDiv);
-                    }
-                }
-            });
-            autoMarkCards();
-        }
-
-        function toggleMark(cardId, row, col) {
-            const card = playerState.cards.find(c => c.id === cardId);
-            if (card && !card.isBingo && playerState.status === 'active') {
-                card.marked[row][col] = !card.marked[row][col];
-                savePlayerState();
-                renderPlayerCards(); // Re-render to update visual
-            }
-        }
-
-        function autoMarkCards() {
-            if (!gameState.adminSettings.autoFillEnabled || !gameState.drawnBalls || playerState.status !== 'active') return;
-
-            playerState.cards.forEach(card => {
-                if (card.isBingo) return; // Don't mark if already bingo
-
-                for (let col = 0; col < 5; col++) {
-                    for (let row = 0; row < 5; row++) {
-                        const cellValue = card.numbers[col][row];
-                        if (cellValue !== 'FREE' && gameState.drawnBalls.includes(cellValue)) {
-                            card.marked[row][col] = true;
-                        }
-                    }
-                }
-            });
+            playerState.cards.push(card);
             savePlayerState();
+            updateAdminPlayers(); // Update admin with new card
             renderPlayerCards();
         }
 
-        function checkBingo(card) {
-            if (card.isBingo) return null; // Already has bingo
+        function renderPlayerCards() {
+            const container = document.getElementById('playerCardsContainer');
+            container.innerHTML = '';
 
+            playerState.cards.forEach((card, cardIndex) => {
+                const cardDiv = document.createElement('div');
+                cardDiv.classList.add('bingo-card');
+                if (playerState.status === 'won') {
+                    cardDiv.classList.add('winner');
+                    cardDiv.innerHTML += '<div class="bingo-status">BINGO!</div>';
+                }
+                cardDiv.innerHTML += `<h3>Cartela #${cardIndex + 1}</h3>`;
+
+                const gridDiv = document.createElement('div');
+                gridDiv.classList.add('bingo-grid');
+
+                // Add headers
+                BINGO_LETTERS.forEach(letter => {
+                    const headerCell = document.createElement('div');
+                    headerCell.classList.add('bingo-cell', 'header');
+                    headerCell.innerHTML = `<span>${letter}</span>`;
+                    gridDiv.appendChild(headerCell);
+                });
+
+                // Add numbers
+                for (let row = 0; row < 5; row++) {
+                    for (let col = 0; col < 5; col++) {
+                        const cell = document.createElement('div');
+                        cell.classList.add('bingo-cell');
+                        cell.dataset.cardIndex = cardIndex;
+                        cell.dataset.rowIndex = row;
+                        cell.dataset.colIndex = col;
+
+                        const number = card.numbers[col][row];
+                        cell.innerHTML = `<span>${number}</span>`;
+
+                        if (number === 'FREE') {
+                            cell.classList.add('free');
+                        }
+                        if (card.marked[col][row]) {
+                            cell.classList.add('marked');
+                        }
+
+                        cell.addEventListener('click', () => markNumber(cardIndex, row, col));
+                        gridDiv.appendChild(cell);
+                    }
+                }
+                cardDiv.appendChild(gridDiv);
+                container.appendChild(cardDiv);
+            });
+        }
+
+        function markNumber(cardIndex, rowIndex, colIndex) {
+            if (adminState.enableAutoFill || playerState.status !== 'active' || adminState.gameEnded) return;
+
+            const card = playerState.cards[cardIndex];
+            if (!card) return;
+
+            const number = card.numbers[colIndex][rowIndex];
+            if (number === 'FREE') return; // Cannot unmark free space
+
+            // Check if the number has been drawn by the admin
+            if (!adminState.drawnNumbers.includes(number)) {
+                alert(`O número ${number} ainda não foi sorteado!`);
+                return;
+            }
+
+            card.marked[colIndex][rowIndex] = !card.marked[colIndex][rowIndex];
+            savePlayerState();
+            renderPlayerCards(); // Re-render to update visual
+        }
+
+        function autoMarkNumbers() {
+            if (!adminState.enableAutoFill || !adminState.gameStarted || adminState.gameEnded) return;
+
+            let changed = false;
+            playerState.cards.forEach(card => {
+                for (let col = 0; col < 5; col++) {
+                    for (let row = 0; row < 5; row++) {
+                        const number = card.numbers[col][row];
+                        if (number !== 'FREE' && !card.marked[col][row] && adminState.drawnNumbers.includes(number)) {
+                            card.marked[col][row] = true;
+                            changed = true;
+                        }
+                    }
+                }
+            });
+            if (changed) {
+                savePlayerState();
+                renderPlayerCards();
+            }
+        }
+
+        function updatePlayerDrawnNumbersGrid() {
+            const grid = document.getElementById('playerDrawnNumbersGrid');
+            grid.innerHTML = '';
+            adminState.drawnNumbers.forEach((num, index) => {
+                const item = document.createElement('div');
+                item.classList.add('drawn-number-item');
+                if (index === adminState.drawnNumbers.length - 1) {
+                    item.classList.add('last-drawn');
+                }
+                item.textContent = num;
+                grid.appendChild(item);
+            });
+            grid.scrollTop = grid.scrollHeight; // Scroll to bottom
+        }
+
+        function checkBingo(card) {
             const marked = card.marked;
-            const bingoTypes = [];
 
             // Check rows
             for (let r = 0; r < 5; r++) {
-                if (marked[r].every(cell => cell)) bingoTypes.push('Linha');
+                if (marked[0][r] && marked[1][r] && marked[2][r] && marked[3][r] && marked[4][r]) return 'Linha';
             }
 
             // Check columns
             for (let c = 0; c < 5; c++) {
-                if (marked.every(row => row[c])) bingoTypes.push('Coluna');
+                if (marked[c][0] && marked[c][1] && marked[c][2] && marked[c][3] && marked[c][4]) return 'Coluna';
             }
 
             // Check diagonals
-            if (marked[0][0] && marked[1][1] && marked[2][2] && marked[3][3] && marked[4][4]) bingoTypes.push('Diagonal');
-            if (marked[0][4] && marked[1][3] && marked[2][2] && marked[3][1] && marked[4][0]) bingoTypes.push('Diagonal');
+            if (marked[0][0] && marked[1][1] && marked[2][2] && marked[3][3] && marked[4][4]) return 'Diagonal';
+            if (marked[0][4] && marked[1][3] && marked[2][2] && marked[3][1] && marked[4][0]) return 'Diagonal';
 
-            // Check full house
-            if (marked.every(row => row.every(cell => cell))) bingoTypes.push('Cartela Cheia');
+            // Check full card (if all cells are marked)
+            let allMarked = true;
+            for (let c = 0; c < 5; c++) {
+                for (let r = 0; r < 5; r++) {
+                    if (!marked[c][r]) {
+                        allMarked = false;
+                        break;
+                    }
+                }
+                if (!allMarked) break;
+            }
+            if (allMarked) return 'Cartela Cheia';
 
-            return bingoTypes.length > 0 ? bingoTypes[0] : null; // Return first detected type
+            return null;
         }
 
         function callBingo() {
-            if (playerState.status !== 'active') {
-                alert('Você não pode chamar BINGO agora.');
+            if (playerState.status !== 'active' || adminState.gameEnded) {
+                alert('Você não pode chamar BINGO no momento.');
+                return;
+            }
+            if (playerState.bingoCalled) {
+                alert('Você já chamou BINGO e está aguardando validação.');
                 return;
             }
 
-            let foundBingo = false;
-            let bingoCardId = null;
-            let bingoType = null;
+            let bingoFound = false;
+            let bingoType = '';
+            let bingoCardId = '';
 
             for (const card of playerState.cards) {
                 const type = checkBingo(card);
                 if (type) {
-                    foundBingo = true;
-                    bingoCardId = card.id;
+                    bingoFound = true;
                     bingoType = type;
+                    bingoCardId = card.id;
                     break;
                 }
             }
 
-            if (foundBingo) {
-                playerState.status = 'bingo_called';
+            if (bingoFound) {
+                playerState.bingoCalled = true;
+                playerState.bingoValidated = null; // Reset validation status
                 savePlayerState();
 
-                // Update admin's game state with bingo call
-                gameState.bingoCall = {
-                    playerId: playerState.id,
-                    cardId: bingoCardId,
-                    bingoType: bingoType,
-                    timestamp: Date.now()
-                };
-                gameState.gamePhase = 'bingo_called'; // Signal admin to pause and validate
-                saveGameState();
-
-                document.getElementById('player-bingo-type').textContent = bingoType;
-                document.getElementById('player-bingo-card-id').textContent = bingoCardId.split('-').pop();
-                openModal('player-bingo-modal');
+                // Notify admin
+                const adminData = localStorage.getItem(`bingo_admin_${playerState.roomCode}`);
+                if (adminData) {
+                    let currentAdminState = JSON.parse(adminData);
+                    currentAdminState.bingoCalls.push({
+                        playerId: playerState.playerId,
+                        cardId: bingoCardId,
+                        type: bingoType,
+                        timestamp: Date.now(),
+                        validated: null
+                    });
+                    currentAdminState.lastUpdate = Date.now();
+                    localStorage.setItem(`bingo_admin_${playerState.roomCode}`, JSON.stringify(currentAdminState));
+                }
+                showBingoCalledModal();
             } else {
-                alert('Você ainda não tem BINGO!');
+                alert('Você ainda não tem BINGO! Continue jogando.');
             }
         }
 
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'flex';
+        // --- Modals ---
+        function showBingoCalledModal() {
+            document.getElementById('bingoCalledModal').classList.add('active');
+            document.getElementById('bingoCalledModal').style.display = 'flex';
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
+        function closeBingoCalledModal() {
+            document.getElementById('bingoCalledModal').classList.remove('active');
+            document.getElementById('bingoCalledModal').style.display = 'none';
         }
 
-        // Periodic update from localStorage
-        setInterval(() => {
-            const storedState = localStorage.getItem(GAME_STATE_KEY);
-            if (storedState) {
-                const newGameState = JSON.parse(storedState);
-                // Only update if there's a change
-                if (JSON.stringify(newGameState) !== JSON.stringify(gameState)) {
-                    gameState = newGameState;
+        function showBingoValidationResultModal(title, message) {
+            document.getElementById('bingoValidationTitle').textContent = title;
+            document.getElementById('bingoValidationMessage').textContent = message;
+            document.getElementById('bingoValidationResultModal').classList.add('active');
+            document.getElementById('bingoValidationResultModal').style.display = 'flex';
+        }
 
-                    // Update player's status if admin changed it (e.g., eliminated, winner)
-                    if (gameState.players[playerState.id]) {
-                        playerState.status = gameState.players[playerState.id].status;
-                        // Also update player's cards from admin's state to reflect validation/marking
-                        playerState.cards = gameState.players[playerState.id].cards;
-                        savePlayerState();
+        function closeBingoValidationResultModal() {
+            document.getElementById('bingoValidationResultModal').classList.remove('active');
+            document.getElementById('bingoValidationResultModal').style.display = 'none';
+        }
+
+        // --- Inicialização ---
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!loadPlayerState()) {
+                // If no room code in URL or no existing player state, show screen 1
+                showScreen('screen1');
+            } else {
+                // If room code exists, try to load admin state immediately
+                const adminData = localStorage.getItem(`bingo_admin_${playerState.roomCode}`);
+                if (adminData) {
+                    adminState = JSON.parse(adminData);
+                    playerState.lastAdminUpdate = adminState.lastUpdate;
+                    updateUI();
+                } else {
+                    alert('Sala não encontrada ou encerrada. Por favor, verifique o link.');
+                    showScreen('screen1');
+                    playerState.roomCode = null; // Clear invalid room code
+                    playerState.playerId = null;
+                    sessionStorage.clear(); // Clear player session
+                }
+            }
+
+            // Polling para atualizar o estado do jogo do admin
+            setInterval(() => {
+                if (playerState.roomCode) {
+                    const adminData = localStorage.getItem(`bingo_admin_${playerState.roomCode}`);
+                    if (adminData) {
+                        const newAdminState = JSON.parse(adminData);
+                        if (newAdminState.lastUpdate > playerState.lastAdminUpdate) {
+                            adminState = newAdminState;
+                            playerState.lastAdminUpdate = adminState.lastUpdate;
+                            updateUI();
+                        }
+                        // Always update admin about player's current state
+                        updateAdminPlayers();
+                    } else {
+                        // Admin room no longer exists
+                        alert('A sala de bingo foi encerrada pelo administrador.');
+                        window.location.href = 'index.html'; // Redirect to home
                     }
-
-                    updatePlayerUI();
+                } else {
+                    // No room code, ensure player is on screen 1
+                    showScreen('screen1');
                 }
-            }
-        }, 2000); // Every 2 seconds
-
-        // Initial load
-        window.onload = () => {
-            loadPlayerState();
-            roomIdFromUrl = getUrlParameter('room');
-
-            if (roomIdFromUrl && playerState.roomId !== roomIdFromUrl) {
-                // If player is trying to join a new room, reset their state
-                sessionStorage.removeItem(PLAYER_STATE_KEY);
-                loadPlayerState();
-                playerState.roomId = roomIdFromUrl;
-                savePlayerState();
-            }
-
-            // Try to load initial game state from localStorage
-            const storedState = localStorage.getItem(GAME_STATE_KEY);
-            if (storedState) {
-                gameState = JSON.parse(storedState);
-                if (gameState.roomId !== playerState.roomId) {
-                    alert('Esta sala não existe ou foi encerrada. Por favor, obtenha um novo link.');
-                    sessionStorage.removeItem(PLAYER_STATE_KEY);
-                    window.location.href = 'index.html';
-                    return;
-                }
-            } else {
-                alert('Nenhuma sala de bingo ativa encontrada. Por favor, obtenha um link de um administrador.');
-                sessionStorage.removeItem(PLAYER_STATE_KEY);
-                window.location.href = 'index.html';
-                return;
-            }
-
-            updatePlayerUI();
-        };
+            }, 2000); // A cada 2 segundos
+        });
     </script>
 </body>
 </html>
