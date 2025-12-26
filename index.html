@@ -5,81 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bingo Digital - Início</title>
     <style>
+        :root {
+            --primary-color: #4CAF50; /* Verde */
+            --secondary-color: #FFC107; /* Amarelo */
+            --accent-color: #FF5722; /* Laranja */
+            --text-color: #333;
+            --bg-gradient-start: #4CAF50;
+            --bg-gradient-end: #FFC107;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #6dd5ed, #2193b0); /* Gradiente azul */
-            color: #fff;
+            background: linear-gradient(45deg, var(--bg-gradient-start), var(--bg-gradient-end));
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            color: white;
             text-align: center;
             overflow: hidden;
         }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .container {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             max-width: 500px;
             width: 90%;
             animation: fadeIn 1s ease-out;
         }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         h1 {
-            font-size: 2.8em;
+            color: var(--accent-color);
             margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         .button-group {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
+
         .btn {
-            background: linear-gradient(45deg, #FFD700, #FFA500); /* Gradiente dourado/laranja */
-            color: #333;
-            border: none;
-            padding: 18px 30px;
-            border-radius: 10px;
-            font-size: 1.4em;
+            display: block;
+            width: 100%;
+            padding: 18px 25px;
+            font-size: 1.3em;
             font-weight: bold;
+            color: white;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
             text-decoration: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            background: linear-gradient(45deg, #FFA500, #FFD700);
-        }
-        .btn-admin {
-            background: linear-gradient(45deg, #FF6B6B, #EE4266); /* Gradiente vermelho/rosa */
-            color: #fff;
-        }
-        .btn-admin:hover {
-            background: linear-gradient(45deg, #EE4266, #FF6B6B);
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Responsividade */
+        .btn:hover {
+            background-color: #388E3C; /* Verde mais escuro */
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn.player {
+            background-color: var(--accent-color);
+        }
+
+        .btn.player:hover {
+            background-color: #E64A19; /* Laranja mais escuro */
+        }
+
         @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
             h1 {
                 font-size: 2em;
             }
             .btn {
-                font-size: 1.2em;
-                padding: 15px 25px;
-            }
-            .container {
-                padding: 30px;
+                font-size: 1.1em;
+                padding: 15px 20px;
             }
         }
     </style>
@@ -88,8 +112,8 @@
     <div class="container">
         <h1>Bem-vindo ao Bingo Digital!</h1>
         <div class="button-group">
-            <a href="admin.html" class="btn btn-admin">Sou Administrador</a>
-            <a href="player.html" class="btn">Sou Jogador</a>
+            <a href="admin.html" class="btn admin">Administrador</a>
+            <a href="player.html" class="btn player">Jogador</a>
         </div>
     </div>
 </body>
