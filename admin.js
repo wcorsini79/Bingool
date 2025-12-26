@@ -22,7 +22,7 @@ document.getElementById("btnCreateRoom").onclick = () => {
     // QR Code
     document.getElementById("qrcode").innerHTML = "";
     new QRCode(document.getElementById("qrcode"),
-        `player.html?room=${roomId}`
+         `https://wcorsini79.github.io/Bingool/player.html?room=${roomId}`
     );
 };
 
@@ -93,4 +93,5 @@ document.getElementById("btnReset").onclick = () => {
     });
 
     updateDrawnNumbers();
+
 };
